@@ -3,7 +3,6 @@ import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
 
-// Configuración de Firebase (reemplaza con tus datos)
 const firebaseConfig = {
     apiKey: "TU_API_KEY",
     authDomain: "TU_AUTH_DOMAIN",
@@ -22,7 +21,7 @@ async function registerUser(email, password, nickname) {
     try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
-        
+
         // Guarda el nickname en el perfil de Firebase Authentication
         await updateProfile(user, { displayName: nickname });
 
@@ -35,7 +34,7 @@ async function registerUser(email, password, nickname) {
     }
 }
 
-// Función para iniciar sesión y recuperar el nickname
+// Función para iniciar sesión y redirigir al chat
 async function loginUser(email, password) {
     try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -45,20 +44,11 @@ async function loginUser(email, password) {
         const nickname = user.displayName;
 
         console.log("Usuario logueado con nickname:", nickname);
-        return nickname;
+        localStorage.setItem("nickname", nickname);
+
+        // Redirigir a salachat.html
+        window.location.href = "salachat.html";
     } catch (error) {
         console.error("Error en login:", error.message);
-    }
-}
-
-// Función para obtener el nickname de Firestore (opcional si quieres más control)
-async function getNickname(uid) {
-    try {
-        const docSnap = await getDoc(doc(db, "users", uid));
-        if (docSnap.exists()) {
-            return docSnap.data().nickname;
-        }
-    } catch (error) {
-        console.error("Error obteniendo nickname:", error.message);
     }
 }
