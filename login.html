@@ -23,7 +23,7 @@
             let nickname = await loginUser(email, password);
             if (nickname) {
                 localStorage.setItem("nickname", nickname);
-                window.location.href = "chat.html";
+                window.location.href = "salachat.html"; // Redirección corregida
             } else {
                 alert("Error en login. Verifica tu email y contraseña.");
             }
