@@ -3,23 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>LLA Bragado</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; background-color: violet; color: white; }
-        #chat { width: 80%; height: 400px; border: 1px solid #ccc; overflow-y: scroll; padding: 10px; margin: 0 auto; background-color: white; color: black; }
-        #input { width: 80%; padding: 5px; margin-top: 10px; }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <h2>LLA Bragado</h2>
-    <div id="chat"></div>
+    <input type="text" id="username" placeholder="Escribe tu nombre...">
     <input type="text" id="input" placeholder="Escribe tu mensaje..." onkeypress="sendMessage(event)">
-    
+    <div id="chat"></div>
+
     <script>
         function sendMessage(event) {
             if (event.key === "Enter") {
-                let message = document.getElementById("input").value;
-                if (message.trim() !== "") {
-                    document.getElementById("chat").innerHTML += "<p>" + message + "</p>";
+                let username = document.getElementById("username").value.trim();
+                let message = document.getElementById("input").value.trim();
+                
+                if (username !== "" && message !== "") {
+                    document.getElementById("chat").innerHTML += `<p><strong>${username}:</strong> ${message}</p>`;
                     document.getElementById("input").value = "";
                 }
             }
