@@ -4,25 +4,46 @@
     <meta charset="UTF-8">
     <title>LLA Bragado</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="auth.js"></script>
 </head>
 <body>
     <h2>LLA Bragado</h2>
-    <input type="text" id="username" placeholder="Elige tu nickname...">
-    <button onclick="login()">Ingresar</button>
-    
+
+    <!-- Formulario de registro -->
+    <input type="email" id="email" placeholder="Ingresa tu email">
+    <input type="password" id="password" placeholder="Ingresa tu contraseña">
+    <input type="text" id="nickname" placeholder="Elige tu nickname">
+    <button onclick="register()">Registrar</button>
+
+    <!-- Formulario de login -->
+    <input type="email" id="loginEmail" placeholder="Email">
+    <input type="password" id="loginPassword" placeholder="Contraseña">
+    <button onclick="login()">Iniciar sesión</button>
+
     <div id="users">Usuarios en línea:</div>
     <input type="text" id="input" placeholder="Escribe tu mensaje..." onkeypress="sendMessage(event)">
     <div id="chat"></div>
 
     <script>
         let usersOnline = [];
+        let currentNickname = "";
 
-        function login() {
-            let username = document.getElementById("username").value.trim();
-            if (username !== "" && !usersOnline.includes(username)) {
-                usersOnline.push(username);
+        function register() {
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+            let nickname = document.getElementById("nickname").value;
+
+            registerUser(email, password, nickname);
+        }
+
+        async function login() {
+            let email = document.getElementById("loginEmail").value;
+            let password = document.getElementById("loginPassword").value;
+            
+            currentNickname = await loginUser(email, password);
+            if (currentNickname !== "" && !usersOnline.includes(currentNickname)) {
+                usersOnline.push(currentNickname);
                 updateUsers();
-                document.getElementById("username").disabled = true;
             }
         }
 
@@ -32,16 +53,6 @@
 
         function sendMessage(event) {
             if (event.key === "Enter") {
-                let username = document.getElementById("username").value.trim();
-                let message = document.getElementById("input").value.trim();
-                
-                if (username !== "" && message !== "") {
-                    document.getElementById("chat").innerHTML += `<p><strong>${username}:</strong> ${message}</p>`;
-                    document.getElementById("input").value = "";
-                }
-            }
-        }
-    </script>
-</body>
-</html>
+                let message = document.getElementById("input").value.trim
+
 
