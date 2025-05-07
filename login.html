@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - LLA Bragado</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="auth.js"></script>
+</head>
+<body>
+    <h2>Iniciar sesión</h2>
+
+    <input type="email" id="loginEmail" placeholder="Email">
+    <input type="password" id="loginPassword" placeholder="Contraseña">
+    <button onclick="login()">Ingresar</button>
+
+    <p>¿No tienes cuenta? <a href="registro.html">Regístrate aquí</a></p>
+
+    <script>
+        async function login() {
+            let email = document.getElementById("loginEmail").value;
+            let password = document.getElementById("loginPassword").value;
+            
+            let nickname = await loginUser(email, password);
+            if (nickname) {
+                localStorage.setItem("nickname", nickname);
+                window.location.href = "chat.html";
+            } else {
+                alert("Error en login. Verifica tu email y contraseña.");
+            }
+        }
+    </script>
+</body>
+</html>
