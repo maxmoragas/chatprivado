@@ -22,37 +22,12 @@
 
     <div id="users">Usuarios en línea:</div>
     <input type="text" id="input" placeholder="Escribe tu mensaje..." onkeypress="sendMessage(event)">
+    <button onclick="sendMessageManual()">Enviar</button>
     <div id="chat"></div>
 
-    <script>
-        let usersOnline = [];
-        let currentNickname = "";
+    <script src="script.js"></script>
+</body>
+</html>
 
-        function register() {
-            let email = document.getElementById("email").value;
-            let password = document.getElementById("password").value;
-            let nickname = document.getElementById("nickname").value;
-
-            registerUser(email, password, nickname);
-        }
-
-        async function login() {
-            let email = document.getElementById("loginEmail").value;
-            let password = document.getElementById("loginPassword").value;
-            
-            currentNickname = await loginUser(email, password);
-            if (currentNickname !== "" && !usersOnline.includes(currentNickname)) {
-                usersOnline.push(currentNickname);
-                updateUsers();
-            }
-        }
-
-        function updateUsers() {
-            document.getElementById("users").innerHTML = "Usuarios en línea: " + usersOnline.join(", ");
-        }
-
-        function sendMessage(event) {
-            if (event.key === "Enter") {
-                let message = document.getElementById("input").value.trim
 
 
