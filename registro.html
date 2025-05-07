@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro - LLA Bragado</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="auth.js"></script>
+</head>
+<body>
+    <h2>Registro</h2>
+    
+    <input type="email" id="email" placeholder="Ingresa tu email">
+    <input type="password" id="password" placeholder="Ingresa tu contraseña">
+    <input type="text" id="nickname" placeholder="Elige tu nickname">
+    <button onclick="register()">Registrarse</button>
+
+    <p>¿Ya tienes cuenta? <a href="login.html">Inicia sesión aquí</a></p>
+
+    <script>
+        function register() {
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+            let nickname = document.getElementById("nickname").value;
+
+            registerUser(email, password, nickname)
+                .then(() => window.location.href = "login.html")
+                .catch(error => console.error("Error en el registro:", error.message));
+        }
+    </script>
+</body>
+</html>
