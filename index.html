@@ -7,11 +7,29 @@
 </head>
 <body>
     <h2>LLA Bragado</h2>
-    <input type="text" id="username" placeholder="Escribe tu nombre...">
+    <input type="text" id="username" placeholder="Elige tu nickname...">
+    <button onclick="login()">Ingresar</button>
+    
+    <div id="users">Usuarios en línea:</div>
     <input type="text" id="input" placeholder="Escribe tu mensaje..." onkeypress="sendMessage(event)">
     <div id="chat"></div>
 
     <script>
+        let usersOnline = [];
+
+        function login() {
+            let username = document.getElementById("username").value.trim();
+            if (username !== "" && !usersOnline.includes(username)) {
+                usersOnline.push(username);
+                updateUsers();
+                document.getElementById("username").disabled = true;
+            }
+        }
+
+        function updateUsers() {
+            document.getElementById("users").innerHTML = "Usuarios en línea: " + usersOnline.join(", ");
+        }
+
         function sendMessage(event) {
             if (event.key === "Enter") {
                 let username = document.getElementById("username").value.trim();
