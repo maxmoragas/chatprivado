@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat - LLA Bragado</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <h2>Bienvenido al chat, <span id="nickname"></span></h2>
+    <button onclick="logout()">Cerrar sesión</button>
+
+    <div id="users">Usuarios en línea:</div>
+    <input type="text" id="input" placeholder="Escribe tu mensaje..." onkeypress="sendMessage(event)">
+    <button onclick="sendMessageManual()">Enviar</button>
+    <div id="chat"></div>
+
+    <script>
+        let usersOnline = [];
+        let currentNickname = localStorage.getItem("nickname");
+
+        if (!currentNickname) {
+            window.location.href = "login.html"; // Redirigir si no está autenticado
+        } else {
+            document.getElementById("nickname").innerText = currentNickname;
+            usersOnline.push(currentNickname);
+            updateUsers();
+        }
+
+        function updateUsers() {
+            document.getElementById("users").innerHTML = "Usuarios en línea: " + usersOnline.join(", ");
+        }
+
+        function sendMessage(event) {
+            if (event.key === "Enter") {
+                sendMessageManual();
+            }
+        }
+
+        function sendMessageManual() {
+            let message = document.getElementById("input").value.trim();
+            
+            if (currentNickname !== "" && message !== "") {
+                document.getElementById("chat").innerHTML += `<p><strong>${currentNickname}:</strong> ${message}</p>`;
+                document.getElementById("input").value = "";
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem("nickname");
+            window.location.href = "login.html"; // Redirigir al login
+        }
+    </script>
+</body>
+</html>
