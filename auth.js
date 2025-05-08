@@ -1,15 +1,14 @@
-// Configura Firebase
 import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: "TU_API_KEY",
-    authDomain: "TU_AUTH_DOMAIN",
-    projectId: "TU_PROJECT_ID",
-    storageBucket: "TU_STORAGE_BUCKET",
-    messagingSenderId: "TU_MESSAGING_SENDER_ID",
-    appId: "TU_APP_ID"
+    apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
+    authDomain: "michatprivado-f704a.firebaseapp.com",
+    projectId: "michatprivado-f704a",
+    storageBucket: "michatprivado-f704a.appspot.com",
+    messagingSenderId: "187774286181",
+    appId: "1:187774286181:web:95fc9391a64d3d244e498c" // ID de la app corregido
 };
 
 const app = initializeApp(firebaseConfig);
@@ -22,33 +21,17 @@ async function registerUser(email, password, nickname) {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
-        // Guarda el nickname en el perfil de Firebase Authentication
+        // Guarda el nickname en Firebase Authentication
         await updateProfile(user, { displayName: nickname });
 
-        // También guardamos el nickname en Firestore
-        await setDoc(doc(db, "users", user.uid), { nickname });
+        // Guarda los datos en Firestore
+        await setDoc(doc(db, "users", user.uid), { nickname, email: user.email });
 
         console.log("Usuario registrado con nickname:", nickname);
+        return true;
     } catch (error) {
         console.error("Error en el registro:", error.message);
+        return false;
     }
 }
 
-// Función para iniciar sesión y redirigir al chat
-async function loginUser(email, password) {
-    try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
-
-        // Recuperamos el nickname del perfil
-        const nickname = user.displayName;
-
-        console.log("Usuario logueado con nickname:", nickname);
-        localStorage.setItem("nickname", nickname);
-
-        // Redirigir a salachat.html
-        window.location.href = "salachat.html";
-    } catch (error) {
-        console.error("Error en login:", error.message);
-    }
-}
