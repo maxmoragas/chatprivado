@@ -1,5 +1,12 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: rgb(XX, XX, XX); /* Aquí coloca el RGB exacto de tu fondo violeta */
+    color: #fff; /* Texto en blanco */
+    text-align: center;
+}
+
 a {
-    color: #ffffff; /* Blanco puro para máxima visibilidad */
+    color: #ffffff; /* Blanco puro para contraste sobre el violeta */
     text-decoration: none;
     font-weight: bold;
     font-size: 18px;
