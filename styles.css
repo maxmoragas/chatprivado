@@ -1,4 +1,3 @@
-/* 🔥 Estilos generales */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
@@ -7,15 +6,13 @@ body {
     padding: 0;
 }
 
-/* 🔥 Encabezado */
 h1 {
-    color: rgb(138, 43, 226); /* Color violeta en RGB */
+    color: rgb(138, 43, 226);
     font-size: 2.5em;
     margin-top: 20px;
     text-align: center;
 }
 
-/* 🔥 Contenedor del login */
 #login {
     background: white;
     padding: 20px;
@@ -25,7 +22,6 @@ h1 {
     margin: 40px auto;
 }
 
-/* 🔥 Estilos para los campos de entrada */
 input {
     width: 90%;
     padding: 10px;
@@ -34,7 +30,6 @@ input {
     border-radius: 5px;
 }
 
-/* 🔥 Botón estilizado */
 button {
     background-color: rgb(138, 43, 226);
     color: white;
