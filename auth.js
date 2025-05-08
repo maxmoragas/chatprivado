@@ -17,38 +17,25 @@ document.addEventListener("DOMContentLoaded", function () {
         window.db = firebase.firestore();
 
         console.log("Firebase inicializado correctamente.");
-
-        // Detectar usuarios online
-        firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-                const userRef = firebase.firestore().collection("users").doc(user.uid);
-                userRef.update({ online: true });
-
-                // Detectar cuando el usuario cierre la página
-                window.addEventListener("beforeunload", () => {
-                    userRef.update({ online: false });
-                });
-            }
-        });
     } else {
         console.error("Firebase no se cargó correctamente.");
     }
 });
 
-// Hacer accesible la función de registro en el entorno global
-window.registerUser = async function(email, password, nickname) {
+// Función de inicio de sesión
+async function loginUser(email, password) {
     try {
-        const userCredential = await window.auth.createUserWithEmailAndPassword(email, password);
+        const userCredential = await window.auth.signInWithEmailAndPassword(email, password);
         const user = userCredential.user;
 
-        await user.updateProfile({ displayName: nickname });
-        await window.db.collection("users").doc(user.uid).set({ nickname, email: user.email, online: true });
-
-        console.log("Usuario registrado con nickname:", nickname);
+        console.log("Usuario logeado:", user.displayName);
         window.location.href = "salachat.html"; // Redirigir al chat después del login
         return true;
     } catch (error) {
-        console.error("Error en el registro:", error.message);
+        console.error("Error en el inicio de sesión:", error.message);
         return false;
     }
-};
+}
+
+// Hacer accesible la función de inicio de sesión en el entorno global
+window.loginUser = loginUser;
