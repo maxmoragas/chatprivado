@@ -15,8 +15,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const botonEnviar = document.getElementById("enviar");
         const imagenInput = document.getElementById("imagenInput");
 
-        inputMensaje.disabled = false;
-
         if (!imagenInput) {
             console.error("❌ Error: No se encontró el elemento 'imagenInput' en el DOM.");
             alert("❌ Error: No se encontró el campo para seleccionar imágenes.");
@@ -34,18 +32,18 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             const mensajeData = {
-                usuario: firebase.auth().currentUser.displayName,
+                usuario: user.displayName,
                 mensaje: mensajeTexto || "",
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
             };
 
             try {
-                // Subir imagen si existe
+                // 🔥 Subir imagen si existe
                 if (imagenSeleccionada) {
                     console.log("📸 Subiendo imagen:", imagenSeleccionada.name);
 
                     const storageRef = storage.ref();
-                    const imagenRef = storageRef.child(`imagenes/${firebase.auth().currentUser.uid}/${Date.now()}_${imagenSeleccionada.name}`);
+                    const imagenRef = storageRef.child(`imagenes/${user.uid}/${Date.now()}_${imagenSeleccionada.name}`);
 
                     await imagenRef.put(imagenSeleccionada);
                     console.log("✅ Imagen subida con éxito.");
@@ -54,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     mensajeData.imagenURL = imagenURL;
                 }
 
-                // Guardar mensaje en Firestore
+                // 🔥 Guardar mensaje en Firestore
                 await db.collection("mensajes").add(mensajeData);
                 console.log("✅ Mensaje enviado correctamente:", mensajeData);
                 
