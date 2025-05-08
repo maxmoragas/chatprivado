@@ -1,6 +1,5 @@
-// Esperar a que Firebase se haya cargado antes de inicializar
+// Esperar a que Firebase se haya cargado antes de inicializarlo
 document.addEventListener("DOMContentLoaded", function () {
-    // Configuración de Firebase
     const firebaseConfig = {
         apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
         authDomain: "michatprivado-f704a.firebaseapp.com",
