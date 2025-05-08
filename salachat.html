@@ -2,54 +2,52 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Chat - LLA Bragado</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat en Vivo</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="script.js"></script>
+    
+    <!-- Cargar Firebase desde la CDN -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="auth.js"></script> <!-- Cargar auth.js después de Firebase -->
 </head>
 <body>
-    <h2>Bienvenido al chat, <span id="nickname"></span></h2>
-    <button onclick="logout()">Cerrar sesión</button>
+    <h1>Chat en Vivo</h1>
+    
+    <h3>Usuarios Online:</h3>
+    <ul id="usuariosOnline"></ul>
 
-    <div id="users">Usuarios en línea:</div>
-    <input type="text" id="input" placeholder="Escribe tu mensaje..." onkeypress="sendMessage(event)">
-    <button onclick="sendMessageManual()">Enviar</button>
-    <div id="chat"></div>
+    <div id="chatBox"></div>
+
+    <input type="text" id="mensaje" placeholder="Escribe un mensaje...">
+    <button id="enviarMensaje">Enviar</button>
 
     <script>
-        let usersOnline = [];
-        let currentNickname = localStorage.getItem("nickname");
+        // Mostrar usuarios online
+        firebase.firestore().collection("users").where("online", "==", true).onSnapshot((snapshot) => {
+            const onlineUsers = snapshot.docs.map(doc => `<li>${doc.data().nickname}</li>`).join("");
+            document.getElementById("usuariosOnline").innerHTML = onlineUsers;
+        });
 
-        if (!currentNickname) {
-            window.location.href = "login.html"; // Redirigir si no está autenticado
-        } else {
-            document.getElementById("nickname").innerText = currentNickname;
-            usersOnline.push(currentNickname);
-            updateUsers();
-        }
-
-        function updateUsers() {
-            document.getElementById("users").innerHTML = "Usuarios en línea: " + usersOnline.join(", ");
-        }
-
-        function sendMessage(event) {
-            if (event.key === "Enter") {
-                sendMessageManual();
+        // Enviar mensaje al chat
+        document.getElementById("enviarMensaje").addEventListener("click", () => {
+            const mensaje = document.getElementById("mensaje").value;
+            if (mensaje.trim() !== "") {
+                firebase.firestore().collection("chat").add({
+                    sender: firebase.auth().currentUser.displayName,
+                    message: mensaje,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                document.getElementById("mensaje").value = "";
             }
-        }
+        });
 
-        function sendMessageManual() {
-            let message = document.getElementById("input").value.trim();
-            
-            if (currentNickname !== "" && message !== "") {
-                document.getElementById("chat").innerHTML += `<p><strong>${currentNickname}:</strong> ${message}</p>`;
-                document.getElementById("input").value = "";
-            }
-        }
-
-        function logout() {
-            localStorage.removeItem("nickname");
-            window.location.href = "login.html"; // Redirigir al login
-        }
+        // Mostrar mensajes en tiempo real
+        firebase.firestore().collection("chat").orderBy("timestamp").onSnapshot((snapshot) => {
+            const chatBox = document.getElementById("chatBox");
+            chatBox.innerHTML = snapshot.docs.map(doc => `<p><b>${doc.data().sender}:</b> ${doc.data().message}</p>`).join("");
+        });
     </script>
 </body>
 </html>
