@@ -14,6 +14,15 @@ h1 {
     text-align: center;
 }
 
+.logo-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.logo-container img {
+    width: 150px;
+}
+
 #register, #login {
     background: white;
     color: black;
