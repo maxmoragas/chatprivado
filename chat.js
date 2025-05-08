@@ -18,7 +18,6 @@ const auth = getAuth(app);
 const storage = getStorage(app);
 
 document.getElementById("enviar").addEventListener("click", sendMessage);
-document.getElementById("subirImagen").addEventListener("click", uploadImage);
 
 async function sendMessage() {
     const user = auth.currentUser;
@@ -28,54 +27,41 @@ async function sendMessage() {
     }
 
     const message = document.getElementById("mensaje").value.trim();
-    if (!message) {
-        alert("❌ El mensaje no puede estar vacío.");
-        return;
-    }
-
-    try {
-        await addDoc(collection(db, "messages"), {
-            userId: user.uid,
-            message: message,
-            timestamp: new Date()
-        });
-        document.getElementById("mensaje").value = "";
-    } catch (error) {
-        console.error("Error al enviar mensaje:", error);
-        alert("❌ Error al enviar mensaje: " + error.message);
-    }
-}
-
-async function uploadImage() {
-    const user = auth.currentUser;
-    if (!user) {
-        alert("❌ Debes estar autenticado para subir imágenes.");
-        return;
-    }
-
     const file = document.getElementById("imagen").files[0];
-    if (!file) {
-        alert("❌ Debes seleccionar una imagen.");
+
+    if (!message && !file) {
+        alert("❌ Debes ingresar un mensaje o seleccionar una imagen.");
         return;
     }
 
-    const storageRef = ref(storage, `images/${user.uid}/${file.name}`);
+    let imageUrl = null;
+
+    if (file) {
+        const storageRef = ref(storage, `images/${user.uid}/${file.name}`);
+        try {
+            await uploadBytes(storageRef, file);
+            imageUrl = await getDownloadURL(storageRef);
+        } catch (error) {
+            console.error("Error al subir imagen:", error);
+            alert("❌ Error al subir imagen: " + error.message);
+            return;
+        }
+    }
 
     try {
-        await uploadBytes(storageRef, file);
-        const imageUrl = await getDownloadURL(storageRef);
-
         await addDoc(collection(db, "messages"), {
             userId: user.uid,
-            message: "📷 Imagen enviada",
+            message: message ? message : "📷 Imagen enviada",
             imageUrl: imageUrl,
             timestamp: new Date()
         });
 
-        alert("✅ Imagen subida correctamente.");
+        alert("✅ Mensaje enviado correctamente.");
+        document.getElementById("mensaje").value = "";
+        document.getElementById("imagen").value = "";
     } catch (error) {
-        console.error("Error al subir imagen:", error);
-        alert("❌ Error al subir imagen: " + error.message);
+        console.error("Error al enviar mensaje:", error);
+        alert("❌ Error al enviar mensaje: " + error.message);
     }
 }
 
@@ -103,5 +89,4 @@ function loadMessages() {
 }
 
 window.sendMessage = sendMessage;
-window.uploadImage = uploadImage;
 loadMessages();
