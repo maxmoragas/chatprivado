@@ -1,12 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () {
     firebase.auth().onAuthStateChanged(user => {
-        if (!user) {
-            console.error("❌ No hay usuario autenticado.");
+        if (!user || !user.displayName) {
+            console.error("❌ Usuario no autenticado.");
+            alert("❌ Error: Usuario no definido. Cierra sesión e inicia nuevamente.");
             window.location.replace("login.html");
             return;
         }
 
-        console.log("✅ Usuario autenticado:", user.displayName || user.email);
+        console.log("✅ Usuario autenticado:", user.displayName);
         const db = firebase.firestore();
         const mensajesContainer = document.getElementById("mensajes");
         const inputMensaje = document.getElementById("mensaje");
@@ -23,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             const mensajeData = {
-                usuario: user.displayName || user.email,
+                usuario: user.displayName,
                 mensaje: mensajeTexto,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
             };
