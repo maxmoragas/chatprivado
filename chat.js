@@ -1,11 +1,12 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
     firebase.auth().onAuthStateChanged(user => {
         if (!user) {
             console.error("❌ No hay usuario autenticado.");
             window.location.replace("login.html");
             return;
         }
-        console.log("✅ Usuario autenticado:", user.displayName);
+
+        console.log("✅ Usuario autenticado:", user.displayName || user.email);
 
         if (!firebase.firestore) {
             console.error("❌ Firebase no se cargó correctamente.");
@@ -20,12 +21,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
         inputMensaje.disabled = false; // 🔥 Habilitar el cuadro de texto correctamente
 
+        // Mostrar usuarios conectados en tiempo real
+        const usuariosList = document.getElementById("listaUsuarios");
+        db.collection("users").where("online", "==", true).onSnapshot(snapshot => {
+            usuariosList.innerHTML = "";
+            snapshot.docs.forEach(doc => {
+                const usuario = doc.data();
+                const listItem = document.createElement("li");
+                listItem.textContent = usuario.nickname || usuario.email;
+                usuariosList.appendChild(listItem);
+            });
+        });
+
+        // Enviar mensaje
         botonEnviar.addEventListener("click", async () => {
             const mensajeTexto = inputMensaje.value.trim();
-            if (!mensajeTexto) return;
+            if (!mensajeTexto) {
+                alert("❌ No puedes enviar un mensaje vacío.");
+                return;
+            }
 
             const mensajeData = {
-                usuario: user.displayName,
+                usuario: user.displayName || user.email,
                 mensaje: mensajeTexto,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
             };
@@ -40,6 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
+        // Mostrar mensajes en tiempo real
         db.collection("mensajes").orderBy("timestamp", "asc").onSnapshot(snapshot => {
             mensajesContainer.innerHTML = "";
             snapshot.docs.forEach(doc => {
