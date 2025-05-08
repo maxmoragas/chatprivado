@@ -12,7 +12,7 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-// Manejo de autenticación y redirección
+// Manejo de autenticación
 auth.onAuthStateChanged(user => {
     if (user && user.displayName) {
         console.log("✅ Usuario autenticado:", user.displayName);
@@ -57,7 +57,14 @@ function registerUser() {
         })
         .then(() => {
             console.log("✅ Usuario registrado correctamente.");
-            window.location.replace("chat.html");
+            setTimeout(() => {
+                if (auth.currentUser) {
+                    console.log("✅ Redirigiendo a la sala de chat...");
+                    window.location.replace("chat.html");
+                } else {
+                    alert("❌ Hubo un problema con el registro. Intenta nuevamente.");
+                }
+            }, 3000);
         })
         .catch(error => {
             console.error("❌ Error al registrarse:", error.message);
