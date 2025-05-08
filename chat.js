@@ -17,10 +17,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
         inputMensaje.disabled = false;
 
+        if (!imagenInput) {
+            console.error("❌ Error: No se encontró el elemento 'imagenInput' en el DOM.");
+            alert("❌ Error: No se encontró el campo para seleccionar imágenes.");
+            return;
+        }
+
         // Enviar mensaje o imagen
         botonEnviar.addEventListener("click", async () => {
             const mensajeTexto = inputMensaje.value.trim();
-            const imagenSeleccionada = imagenInput && imagenInput.files.length > 0 ? imagenInput.files[0] : null;
+            const imagenSeleccionada = imagenInput.files.length > 0 ? imagenInput.files[0] : null;
 
             if (!mensajeTexto && !imagenSeleccionada) {
                 alert("❌ Debes escribir un mensaje o seleccionar una imagen.");
@@ -45,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     console.log("✅ Imagen subida con éxito.");
                     
                     const imagenURL = await imagenRef.getDownloadURL();
-                    mensajeData.imagenURL = imagenURL; // 🔥 Agregar la URL al mensaje
+                    mensajeData.imagenURL = imagenURL;
                 }
 
                 // Guardar mensaje en Firestore
@@ -53,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.log("✅ Mensaje enviado correctamente:", mensajeData);
                 
                 inputMensaje.value = "";
-                imagenInput.value = ""; // 🔥 Limpiar la selección de imagen
+                imagenInput.value = ""; 
 
             } catch (error) {
                 console.error("❌ Error al enviar mensaje:", error.message);
