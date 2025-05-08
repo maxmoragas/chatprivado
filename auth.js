@@ -1,4 +1,4 @@
-// Configurar Firebase con los datos proporcionados
+// Configurar Firebase con los datos correctos
 const firebaseConfig = {
     apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
     authDomain: "michatprivado-f704a.firebaseapp.com",
