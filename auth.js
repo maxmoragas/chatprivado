@@ -1,5 +1,5 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
@@ -11,6 +11,8 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+console.log("Firebase inicializado correctamente:", app);
+
 const auth = getAuth(app);
 
 function registerUser() {
@@ -23,6 +25,7 @@ function registerUser() {
             window.location.replace("login.html");
         })
         .catch(error => {
+            console.error("Error al registrar:", error);
             alert("❌ Error al registrar: " + error.message);
         });
 }
@@ -36,6 +39,7 @@ function loginUser() {
             window.location.replace("chat.html");
         })
         .catch(error => {
+            console.error("Error al iniciar sesión:", error);
             alert("❌ Error al iniciar sesión: " + error.message);
         });
 }
