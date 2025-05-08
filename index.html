@@ -2,11 +2,20 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Bienvenido - LLA Bragado</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiChatPrivado</title>
 </head>
 <body>
-    <h2>Bienvenido a LLA Bragado</h2>
-    <p><a href="registro.html">Registrarse</a> | <a href="login.html">Iniciar sesión</a></p>
+    <h2>Registro</h2>
+    <input type="email" id="registerEmail" placeholder="Correo electrónico">
+    <input type="password" id="registerPassword" placeholder="Contraseña">
+    <button onclick="registerUser()">Registrarse</button>
+
+    <h2>Iniciar Sesión</h2>
+    <input type="email" id="loginEmail" placeholder="Correo electrónico">
+    <input type="password" id="loginPassword" placeholder="Contraseña">
+    <button onclick="loginUser()">Iniciar Sesión</button>
+
+    <script type="module" src="app.js"></script>
 </body>
 </html>
