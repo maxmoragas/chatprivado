@@ -26,7 +26,10 @@ auth.onAuthStateChanged(user => {
             projectId: firebaseConfig.projectId
         }, { merge: true });
 
-        window.location.href = "chat.html"; // Redirige al chat si está autenticado
+        // 🔥 Redirige al chat con un pequeño retraso para asegurar la autenticación
+        setTimeout(() => {
+            window.location.href = "chat.html";
+        }, 2000);
     } else {
         console.log("❌ No hay usuario autenticado, redirigiendo a login...");
         window.location.href = "login.html"; // Redirige al login si no hay usuario activo
@@ -45,7 +48,12 @@ function login(email, password) {
             }, { merge: true });
 
             console.log("✅ Inicio de sesión exitoso:", user.displayName);
-            window.location.href = "chat.html"; // Redirige al chat
+            
+            // 🔥 Redirige al chat con un pequeño retraso para evitar problemas de carga
+            setTimeout(() => {
+                window.location.href = "chat.html";
+            }, 2000);
+
         })
         .catch(error => {
             console.error("❌ Error en el login:", error.message);
@@ -67,7 +75,11 @@ function register(email, password, nickname) {
         })
         .then(() => {
             console.log("✅ Usuario registrado correctamente!");
-            window.location.href = "chat.html"; // Redirige al chat
+
+            // 🔥 Redirige al chat después del registro
+            setTimeout(() => {
+                window.location.href = "chat.html";
+            }, 2000);
         })
         .catch(error => {
             console.error("❌ Error al registrarse:", error.message);
