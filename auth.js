@@ -1,10 +1,10 @@
 // 🔥 Importación de Firebase
-import { initializeApp } from "firebase/app";
-import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { getFirestore, doc, setDoc } from "firebase/firestore";
-import { getStorage } from "firebase/storage";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+import { getStorage } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js";
 
-// ✅ Configuración de Firebase (con tus datos)
+// ✅ Configuración de Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
     authDomain: "michatprivado-f704a.firebaseapp.com",
