@@ -3,40 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>MiChatPrivado - Login</title>
     <link rel="stylesheet" href="styles.css">
-    
-    <!-- Cargar Firebase desde la CDN -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    <script type="module" src="auth.js"></script>
- <!-- Cargar auth.js después de Firebase -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
-    <h1>Iniciar Sesión</h1>
-    
-    <form id="loginForm">
-        <label for="email">Correo:</label>
-        <input type="email" id="email" required>
+    <h1>LLA Bragado 🚀</h1>
 
+    <div id="login">
+        <h2>Iniciar sesión</h2>
+        <label for="email">Correo electrónico:</label>
+        <input type="email" id="email" placeholder="Escribe tu correo" required>
+        
         <label for="password">Contraseña:</label>
-        <input type="password" id="password" required>
+        <input type="password" id="password" placeholder="Escribe tu contraseña" required>
 
-        <button type="button" id="loginButton">Ingresar</button>
-    </form>
+        <button onclick="loginUser()">Iniciar sesión</button>
+    </div>
 
-    <script>
-        document.getElementById("loginButton").addEventListener("click", async () => {
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
-            
-            const success = await window.loginUser(email, password);
-            
-            if (!success) {
-                alert("Error en el inicio de sesión. Revisa la consola.");
-            }
-        });
-    </script>
+    <script type="module" src="auth.js"></script>
 </body>
 </html>
