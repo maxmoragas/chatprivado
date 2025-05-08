@@ -6,11 +6,11 @@
     <title>Registro</title>
     <link rel="stylesheet" href="styles.css">
     
-    <!-- Cargar Firebase desde la CDN antes que auth.js -->
+    <!-- Cargar Firebase desde la CDN -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    <script src="auth.js"></script> <!-- Ahora `auth.js` se carga después de Firebase -->
+    <script src="auth.js"></script> <!-- Cargar auth.js después de Firebase -->
 </head>
 <body>
     <h1>Registro de Usuario</h1>
@@ -25,4 +25,26 @@
         <label for="nickname">Sobrenombre:</label>
         <input type="text" id="nickname" required>
 
-        <button
+        <button type="submit">Registrarse</button>
+    </form>
+
+    <script>
+        document.getElementById("registroForm").addEventListener("submit", async (event) => {
+            event.preventDefault();
+            
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const nickname = document.getElementById("nickname").value;
+            
+            const success = await window.registerUser(email, password, nickname);
+            
+            if (success) {
+                alert("¡Usuario registrado exitosamente!");
+                window.location.href = "salachat.html";
+            } else {
+                alert("Hubo un error en el registro. Revisa la consola.");
+            }
+        });
+    </script>
+</body>
+</html>
