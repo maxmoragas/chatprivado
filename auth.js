@@ -36,8 +36,13 @@ auth.onAuthStateChanged(user => {
     }
 });
 
-// Función para iniciar sesión
+// Función para iniciar sesión con validación
 function login(email, password) {
+    if (!email || !password) {
+        alert("❌ Debes ingresar tu email y contraseña!");
+        return;
+    }
+
     auth.signInWithEmailAndPassword(email, password)
         .then(userCredential => {
             const user = userCredential.user;
@@ -48,15 +53,14 @@ function login(email, password) {
             }, { merge: true });
 
             console.log("✅ Inicio de sesión exitoso:", user.displayName);
-            
-            // 🔥 Redirigir al chat después del login
+
             setTimeout(() => {
                 window.location.assign("chat.html");
             }, 2000);
-
         })
         .catch(error => {
             console.error("❌ Error en el login:", error.message);
+            alert("❌ Error al iniciar sesión: " + error.message);
         });
 }
 
