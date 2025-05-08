@@ -12,27 +12,28 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-// Manejo de autenticación
-auth.onAuthStateChanged(user => {
-    if (user && user.displayName) {
-        console.log("✅ Usuario autenticado:", user.displayName);
-        db.collection("users").doc(user.uid).set({
-            nickname: user.displayName,
-            email: user.email,
-            online: true,
-            userId: user.uid
-        }, { merge: true });
+// Manejo de autenticación, evitando redirecciones prematuras
+document.addEventListener("DOMContentLoaded", function () {
+    auth.onAuthStateChanged(user => {
+        if (user && user.displayName) {
+            console.log("✅ Usuario autenticado:", user.displayName);
+            db.collection("users").doc(user.uid).set({
+                nickname: user.displayName,
+                email: user.email,
+                online: true,
+                userId: user.uid
+            }, { merge: true });
 
-        if (!window.location.href.includes("chat.html")) {
-            window.location.replace("chat.html");
+            if (!window.location.href.includes("chat.html")) {
+                window.location.replace("chat.html");
+            }
+        } else {
+            console.log("❌ No hay usuario autenticado, redirigiendo a login...");
         }
-    } else {
-        console.log("❌ No hay usuario autenticado, redirigiendo a login...");
-        window.location.replace("login.html");
-    }
+    });
 });
 
-// Función de registro
+// Función de registro con validación y espera antes de redirigir
 function registerUser() {
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
