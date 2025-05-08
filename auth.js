@@ -22,13 +22,26 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-// Función de inicio de sesión
-async function loginUser(email, password) {
-    if (!window.auth) {
-        console.error("❌ Firebase Auth no está definido.");
+// Función de registro de usuario
+async function registerUser(email, password, nickname) {
+    try {
+        const userCredential = await window.auth.createUserWithEmailAndPassword(email, password);
+        const user = userCredential.user;
+
+        await user.updateProfile({ displayName: nickname });
+        await window.db.collection("users").doc(user.uid).set({ nickname, email: user.email, online: true });
+
+        console.log("Usuario registrado con nickname:", nickname);
+        window.location.href = "salachat.html"; // Redirigir al chat después del registro
+        return true;
+    } catch (error) {
+        console.error("Error en el registro:", error.message);
         return false;
     }
+}
 
+// Función de inicio de sesión
+async function loginUser(email, password) {
     try {
         const userCredential = await window.auth.signInWithEmailAndPassword(email, password);
         const user = userCredential.user;
@@ -42,5 +55,6 @@ async function loginUser(email, password) {
     }
 }
 
-// Hacer accesible la función de inicio de sesión en el entorno global
+// Hacer accesibles las funciones de autenticación en el entorno global
+window.registerUser = registerUser;
 window.loginUser = loginUser;
