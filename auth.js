@@ -1,4 +1,4 @@
-// Configuración de Firebase
+// Configuración de Firebase con tus datos
 const firebaseConfig = {
     apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
     authDomain: "michatprivado-f704a.firebaseapp.com",
@@ -12,17 +12,10 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-// Manejar autenticación y redirección
+// Manejo de autenticación y redirección
 auth.onAuthStateChanged(user => {
-    if (user) {
-        console.log("✅ Usuario autenticado:", user.displayName || user.email);
-
-        if (!user.displayName) {
-            alert("❌ Error: No tienes un nombre de usuario. Cierra sesión e intenta registrarte nuevamente.");
-            auth.signOut();
-            return;
-        }
-
+    if (user && user.displayName) {
+        console.log("✅ Usuario autenticado:", user.displayName);
         db.collection("users").doc(user.uid).set({
             nickname: user.displayName,
             email: user.email,
@@ -30,9 +23,9 @@ auth.onAuthStateChanged(user => {
             userId: user.uid
         }, { merge: true });
 
-        setTimeout(() => {
+        if (!window.location.href.includes("chat.html")) {
             window.location.replace("chat.html");
-        }, 2000);
+        }
     } else {
         console.log("❌ No hay usuario autenticado, redirigiendo a login...");
         window.location.replace("login.html");
@@ -64,15 +57,7 @@ function registerUser() {
         })
         .then(() => {
             console.log("✅ Usuario registrado correctamente.");
-
-            setTimeout(() => {
-                if (auth.currentUser) {
-                    console.log("✅ Redirigiendo a la sala de chat...");
-                    window.location.replace("chat.html");
-                } else {
-                    alert("❌ Hubo un problema con el registro. Intenta nuevamente.");
-                }
-            }, 2000);
+            window.location.replace("chat.html");
         })
         .catch(error => {
             console.error("❌ Error al registrarse:", error.message);
@@ -95,18 +80,10 @@ function loginUser() {
         .then(userCredential => {
             const user = userCredential.user;
 
-            if (!user.displayName) {
-                alert("❌ Error: No tienes un nombre de usuario.");
-                auth.signOut();
-                return;
-            }
-
             db.collection("users").doc(user.uid).set({ online: true }, { merge: true });
 
             console.log("✅ Inicio de sesión exitoso:", user.displayName);
-            setTimeout(() => {
-                window.location.replace("chat.html");
-            }, 2000);
+            window.location.replace("chat.html");
         })
         .catch(error => {
             console.error("❌ Error en el login:", error.message);
