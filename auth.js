@@ -1,14 +1,14 @@
 // Esperar a que Firebase se haya cargado correctamente antes de inicializarlo
 document.addEventListener("DOMContentLoaded", function () {
     if (typeof firebase !== "undefined") {
-        // Configuración de Firebase
+        // Configuración de Firebase con los datos correctos
         const firebaseConfig = {
-            apiKey: "TU_API_KEY",
-            authDomain: "TU_AUTH_DOMAIN",
-            projectId: "TU_PROJECT_ID",
-            storageBucket: "TU_STORAGE_BUCKET",
-            messagingSenderId: "TU_MESSAGING_SENDER_ID",
-            appId: "TU_APP_ID"
+            apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
+            authDomain: "michatprivado-f704a.firebaseapp.com",
+            projectId: "michatprivado-f704a",
+            storageBucket: "michatprivado-f704a.appspot.com",
+            messagingSenderId: "187774286181",
+            appId: "1:187774286181:web:95fc9391a64d3d244e498c"
         };
 
         // Inicializar Firebase
