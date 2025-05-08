@@ -1,4 +1,4 @@
-// Cargar Firebase desde la CDN sin usar módulos
+// Cargar Firebase desde la CDN
 const firebaseConfig = {
     apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
     authDomain: "michatprivado-f704a.firebaseapp.com",
@@ -8,19 +8,23 @@ const firebaseConfig = {
     appId: "1:187774286181:web:95fc9391a64d3d244e498c"
 };
 
-// Inicializar Firebase
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
+// Esperar a que Firebase esté definido antes de inicializarlo
+document.addEventListener("DOMContentLoaded", function () {
+    firebase.initializeApp(firebaseConfig);
+    window.auth = firebase.auth();
+    window.db = firebase.firestore();
+
+    console.log("Firebase inicializado correctamente.");
+});
 
 // Función de registro de usuario
 async function registerUser(email, password, nickname) {
     try {
-        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+        const userCredential = await window.auth.createUserWithEmailAndPassword(email, password);
         const user = userCredential.user;
 
         await user.updateProfile({ displayName: nickname });
-        await db.collection("users").doc(user.uid).set({ nickname, email: user.email });
+        await window.db.collection("users").doc(user.uid).set({ nickname, email: user.email });
 
         console.log("Usuario registrado con nickname:", nickname);
         return true;
@@ -30,5 +34,5 @@ async function registerUser(email, password, nickname) {
     }
 }
 
-// Hacer que la función esté accesible globalmente
+// Hacer accesible la función de registro en el entorno global
 window.registerUser = registerUser;
