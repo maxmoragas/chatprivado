@@ -7,13 +7,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         console.log("✅ Usuario autenticado:", user.displayName || user.email);
-
-        if (!firebase.firestore) {
-            console.error("❌ Firebase no se cargó correctamente.");
-            alert("❌ Error al conectar con Firebase, revisa tu configuración.");
-            return;
-        }
-
         const db = firebase.firestore();
         const mensajesContainer = document.getElementById("mensajes");
         const inputMensaje = document.getElementById("mensaje");
