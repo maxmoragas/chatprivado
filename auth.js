@@ -24,6 +24,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Función de inicio de sesión
 async function loginUser(email, password) {
+    if (!window.auth) {
+        console.error("❌ Firebase Auth no está definido.");
+        return false;
+    }
+
     try {
         const userCredential = await window.auth.signInWithEmailAndPassword(email, password);
         const user = userCredential.user;
