@@ -67,6 +67,7 @@ function registerUser() {
 
             setTimeout(() => {
                 if (auth.currentUser) {
+                    console.log("✅ Redirigiendo a la sala de chat...");
                     window.location.replace("chat.html");
                 } else {
                     alert("❌ Hubo un problema con el registro. Intenta nuevamente.");
