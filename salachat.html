@@ -1,4 +1,34 @@
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-<script src="auth.js"></script> <!-- Auth.js después de Firebase -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sala de Chat</title>
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Cargar Firebase desde la CDN -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="auth.js"></script>
+    <script src="chat.js"></script> <!-- Código del chat -->
+</head>
+<body>
+    <h1>Sala de Chat</h1>
+
+    <!-- Lista de usuarios online -->
+    <div id="usuariosOnline">
+        <h3>Usuarios conectados:</h3>
+        <ul id="listaUsuarios"></ul>
+    </div>
+
+    <!-- Área de mensajes -->
+    <div id="chatContainer">
+        <div id="mensajes"></div>
+        <input type="text" id="mensaje" placeholder="Escribe un mensaje...">
+        <input type="file" id="imagen" accept="image/*">
+        <button id="enviar">Enviar</button>
+    </div>
+
+</body>
+</html>
