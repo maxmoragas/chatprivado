@@ -12,7 +12,7 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-// Manejar el estado de autenticación
+// Manejar el estado de autenticación y redirigir correctamente
 auth.onAuthStateChanged(user => {
     if (user) {
         console.log("✅ Usuario autenticado:", user.displayName);
@@ -26,13 +26,13 @@ auth.onAuthStateChanged(user => {
             projectId: firebaseConfig.projectId
         }, { merge: true });
 
-        // 🔥 Redirige al chat con un pequeño retraso para asegurar la autenticación
+        // 🔥 Redirigir usando `replace` para evitar problemas de caché
         setTimeout(() => {
-            window.location.href = "chat.html";
+            window.location.replace("chat.html");
         }, 2000);
     } else {
         console.log("❌ No hay usuario autenticado, redirigiendo a login...");
-        window.location.href = "login.html"; // Redirige al login si no hay usuario activo
+        window.location.replace("login.html");
     }
 });
 
@@ -49,9 +49,9 @@ function login(email, password) {
 
             console.log("✅ Inicio de sesión exitoso:", user.displayName);
             
-            // 🔥 Redirige al chat con un pequeño retraso para evitar problemas de carga
+            // 🔥 Redirigir al chat después del login
             setTimeout(() => {
-                window.location.href = "chat.html";
+                window.location.replace("chat.html");
             }, 2000);
 
         })
@@ -76,9 +76,9 @@ function register(email, password, nickname) {
         .then(() => {
             console.log("✅ Usuario registrado correctamente!");
 
-            // 🔥 Redirige al chat después del registro
+            // 🔥 Redirigir al chat después del registro
             setTimeout(() => {
-                window.location.href = "chat.html";
+                window.location.replace("chat.html");
             }, 2000);
         })
         .catch(error => {
@@ -98,7 +98,7 @@ function logout() {
     auth.signOut()
         .then(() => {
             console.log("✅ Sesión cerrada correctamente.");
-            window.location.href = "login.html"; // Redirige al login
+            window.location.replace("login.html");
         })
         .catch(error => {
             console.error("❌ Error al cerrar sesión:", error.message);
