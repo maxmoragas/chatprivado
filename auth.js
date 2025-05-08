@@ -10,7 +10,6 @@ const firebaseConfig = {
     appId: "1:187774286181:web:95fc9391a64d3d244e498c"
 };
 
-// ✅ Inicialización de Firebase con verificación en consola
 const app = initializeApp(firebaseConfig);
 console.log("🔥 Firebase inicializado correctamente:", app);
 
