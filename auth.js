@@ -1,16 +1,17 @@
 // Configuración de Firebase con tus datos
 const firebaseConfig = {
-    apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
-    authDomain: "michatprivado-f704a.firebaseapp.com",
-    projectId: "michatprivado-f704a",
-    storageBucket: "michatprivado-f704a.appspot.com",
-    messagingSenderId: "187774286181",
-    appId: "1:187774286181:web:95fc9391a64d3d244e498c"
+    apiKey: "TU_API_KEY",
+    authDomain: "TU_DOMINIO.firebaseapp.com",
+    projectId: "TU_PROJECT_ID",
+    storageBucket: "TU_STORAGE_BUCKET.appspot.com",
+    messagingSenderId: "TU_MESSAGING_SENDER_ID",
+    appId: "TU_APP_ID"
 };
 firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
 const db = firebase.firestore();
+const storage = firebase.storage(); // 🔥 Asegurar que Firebase Storage esté inicializado correctamente
 
 // Manejo de autenticación
 document.addEventListener("DOMContentLoaded", function () {
