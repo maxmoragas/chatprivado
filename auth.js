@@ -1,10 +1,10 @@
-// 🔥 Importación de Firebase como módulo
+// 🔥 Importación de Firebase
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, doc, setDoc } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
-// ✅ Configuración de Firebase (reemplaza con tus datos)
+// ✅ Configuración de Firebase (con tus datos)
 const firebaseConfig = {
     apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
     authDomain: "michatprivado-f704a.firebaseapp.com",
@@ -14,6 +14,7 @@ const firebaseConfig = {
     appId: "1:187774286181:web:95fc9391a64d3d244e498c"
 };
 
+// 🔥 Inicialización de Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
@@ -38,7 +39,7 @@ onAuthStateChanged(auth, user => {
     }
 });
 
-// 🔥 Función de registro e inicio de sesión
+// 🔥 Función de inicio de sesión
 function loginUser() {
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
