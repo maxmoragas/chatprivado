@@ -1,60 +1,94 @@
-// Esperar a que Firebase se haya cargado correctamente antes de inicializarlo
-document.addEventListener("DOMContentLoaded", function () {
-    if (typeof firebase !== "undefined") {
-        // Configuración de Firebase con los datos correctos
-        const firebaseConfig = {
-            apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
-            authDomain: "michatprivado-f704a.firebaseapp.com",
-            projectId: "michatprivado-f704a",
-            storageBucket: "michatprivado-f704a.appspot.com",
-            messagingSenderId: "187774286181",
-            appId: "1:187774286181:web:95fc9391a64d3d244e498c"
-        };
+// Configurar Firebase con los datos proporcionados
+const firebaseConfig = {
+    apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
+    authDomain: "michatprivado-f704a.firebaseapp.com",
+    projectId: "michatprivado-f704a",
+    storageBucket: "michatprivado-f704a.appspot.com",
+    messagingSenderId: "187774286181",
+    appId: "1:187774286181:web:95fc9391a64d3d244e498c"
+};
+firebase.initializeApp(firebaseConfig);
 
-        // Inicializar Firebase correctamente
-        const firebaseApp = firebase.initializeApp(firebaseConfig);
-        window.auth = firebaseApp.auth();
-        window.db = firebaseApp.firestore();
+const auth = firebase.auth();
+const db = firebase.firestore();
 
-        console.log("✅ Firebase inicializado correctamente.");
+// Manejar el estado de autenticación
+auth.onAuthStateChanged(user => {
+    if (user) {
+        console.log("✅ Usuario autenticado:", user.displayName);
+
+        // Guardar usuario en Firestore con estado "online"
+        db.collection("users").doc(user.uid).set({
+            nickname: user.displayName || "Usuario",
+            email: user.email,
+            online: true,
+            userId: user.uid,
+            projectId: firebaseConfig.projectId
+        }, { merge: true });
+
+        window.location.href = "chat.html"; // Redirige al chat si está autenticado
     } else {
-        console.error("❌ Firebase no se cargó correctamente.");
+        console.log("❌ No hay usuario autenticado, redirigiendo a login...");
+        window.location.href = "login.html"; // Redirige al login si no hay usuario activo
     }
 });
 
-// Función de registro de usuario
-async function registerUser(email, password, nickname) {
-    try {
-        const userCredential = await window.auth.createUserWithEmailAndPassword(email, password);
-        const user = userCredential.user;
+// Función para iniciar sesión
+function login(email, password) {
+    auth.signInWithEmailAndPassword(email, password)
+        .then(userCredential => {
+            const user = userCredential.user;
 
-        await user.updateProfile({ displayName: nickname });
-        await window.db.collection("users").doc(user.uid).set({ nickname, email: user.email, online: true });
+            // Guardar estado "online" al iniciar sesión
+            db.collection("users").doc(user.uid).set({
+                online: true
+            }, { merge: true });
 
-        console.log("✅ Usuario registrado con nickname:", nickname);
-        window.location.href = "salachat.html"; // Redirigir al chat después del registro
-        return true;
-    } catch (error) {
-        console.error("❌ Error en el registro:", error.message);
-        return false;
-    }
+            console.log("✅ Inicio de sesión exitoso:", user.displayName);
+            window.location.href = "chat.html"; // Redirige al chat
+        })
+        .catch(error => {
+            console.error("❌ Error en el login:", error.message);
+        });
 }
 
-// Función de inicio de sesión
-async function loginUser(email, password) {
-    try {
-        const userCredential = await window.auth.signInWithEmailAndPassword(email, password);
-        const user = userCredential.user;
-
-        console.log("✅ Usuario logeado:", user.displayName);
-        window.location.href = "salachat.html"; // Redirigir al chat después del login
-        return true;
-    } catch (error) {
-        console.error("❌ Error en el inicio de sesión:", error.message);
-        return false;
-    }
+// Función para registrar usuario
+function register(email, password, nickname) {
+    auth.createUserWithEmailAndPassword(email, password)
+        .then(userCredential => {
+            let user = userCredential.user;
+            return db.collection("users").doc(user.uid).set({
+                nickname: nickname,
+                email: user.email,
+                online: true,
+                userId: user.uid,
+                projectId: firebaseConfig.projectId
+            });
+        })
+        .then(() => {
+            console.log("✅ Usuario registrado correctamente!");
+            window.location.href = "chat.html"; // Redirige al chat
+        })
+        .catch(error => {
+            console.error("❌ Error al registrarse:", error.message);
+        });
 }
 
-// Hacer accesibles las funciones de autenticación en el entorno global
-window.registerUser = registerUser;
-window.loginUser = loginUser;
+// Función para cerrar sesión
+function logout() {
+    const user = auth.currentUser;
+    if (user) {
+        db.collection("users").doc(user.uid).set({
+            online: false
+        }, { merge: true });
+    }
+
+    auth.signOut()
+        .then(() => {
+            console.log("✅ Sesión cerrada correctamente.");
+            window.location.href = "login.html"; // Redirige al login
+        })
+        .catch(error => {
+            console.error("❌ Error al cerrar sesión:", error.message);
+        });
+}
