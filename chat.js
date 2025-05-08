@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", async function () {
+document.addEventListener("DOMContentLoaded", function () {
     firebase.auth().onAuthStateChanged(user => {
         if (!user) {
             console.error("❌ No hay usuario autenticado.");
@@ -19,19 +19,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         const inputMensaje = document.getElementById("mensaje");
         const botonEnviar = document.getElementById("enviar");
 
-        inputMensaje.disabled = false; // 🔥 Habilitar el cuadro de texto correctamente
-
-        // Mostrar usuarios conectados en tiempo real
-        const usuariosList = document.getElementById("listaUsuarios");
-        db.collection("users").where("online", "==", true).onSnapshot(snapshot => {
-            usuariosList.innerHTML = "";
-            snapshot.docs.forEach(doc => {
-                const usuario = doc.data();
-                const listItem = document.createElement("li");
-                listItem.textContent = usuario.nickname || usuario.email;
-                usuariosList.appendChild(listItem);
-            });
-        });
+        inputMensaje.disabled = false;
 
         // Enviar mensaje
         botonEnviar.addEventListener("click", async () => {
