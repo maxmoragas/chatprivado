@@ -26,13 +26,13 @@ auth.onAuthStateChanged(user => {
             projectId: firebaseConfig.projectId
         }, { merge: true });
 
-        // 🔥 Redirigir usando `replace` para evitar problemas de caché
+        // 🔥 Redirigir al chat de forma segura
         setTimeout(() => {
-            window.location.replace("chat.html");
+            window.location.assign("chat.html");
         }, 2000);
     } else {
         console.log("❌ No hay usuario autenticado, redirigiendo a login...");
-        window.location.replace("login.html");
+        window.location.assign("login.html");
     }
 });
 
@@ -51,7 +51,7 @@ function login(email, password) {
             
             // 🔥 Redirigir al chat después del login
             setTimeout(() => {
-                window.location.replace("chat.html");
+                window.location.assign("chat.html");
             }, 2000);
 
         })
@@ -78,7 +78,7 @@ function register(email, password, nickname) {
 
             // 🔥 Redirigir al chat después del registro
             setTimeout(() => {
-                window.location.replace("chat.html");
+                window.location.assign("chat.html");
             }, 2000);
         })
         .catch(error => {
@@ -98,7 +98,7 @@ function logout() {
     auth.signOut()
         .then(() => {
             console.log("✅ Sesión cerrada correctamente.");
-            window.location.replace("login.html");
+            window.location.assign("login.html");
         })
         .catch(error => {
             console.error("❌ Error al cerrar sesión:", error.message);
