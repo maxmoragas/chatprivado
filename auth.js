@@ -64,11 +64,17 @@ function login(email, password) {
         });
 }
 
-// Función para registrar usuario
+// Función para registrar usuario con validación
 function register(email, password, nickname) {
+    if (!email || !password || !nickname) {
+        alert("❌ Debes ingresar email, contraseña y un nombre!");
+        return;
+    }
+
     auth.createUserWithEmailAndPassword(email, password)
         .then(userCredential => {
             let user = userCredential.user;
+
             return db.collection("users").doc(user.uid).set({
                 nickname: nickname,
                 email: user.email,
@@ -80,13 +86,14 @@ function register(email, password, nickname) {
         .then(() => {
             console.log("✅ Usuario registrado correctamente!");
 
-            // 🔥 Redirigir al chat después del registro
+            // 🔥 Solo redirigir después de que el usuario se haya guardado en Firestore
             setTimeout(() => {
                 window.location.assign("chat.html");
             }, 2000);
         })
         .catch(error => {
             console.error("❌ Error al registrarse:", error.message);
+            alert("❌ Error al registrarse: " + error.message);
         });
 }
 
