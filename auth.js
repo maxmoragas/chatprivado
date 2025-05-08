@@ -1,4 +1,4 @@
-// Configurar Firebase
+// Configuración de Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
     authDomain: "michatprivado-f704a.firebaseapp.com",
@@ -8,6 +8,7 @@ const firebaseConfig = {
     appId: "1:187774286181:web:95fc9391a64d3d244e498c"
 };
 firebase.initializeApp(firebaseConfig);
+
 const auth = firebase.auth();
 const db = firebase.firestore();
 
@@ -15,8 +16,15 @@ const db = firebase.firestore();
 auth.onAuthStateChanged(user => {
     if (user) {
         console.log("✅ Usuario autenticado:", user.displayName || user.email);
+        
+        if (!user.displayName) {
+            alert("❌ Error: No tienes un nombre de usuario. Cierra sesión e intenta registrarte nuevamente.");
+            window.location.replace("login.html");
+            return;
+        }
+
         db.collection("users").doc(user.uid).set({
-            nickname: user.displayName || "Usuario",
+            nickname: user.displayName,
             email: user.email,
             online: true,
             userId: user.uid,
@@ -45,9 +53,16 @@ function loginUser() {
     auth.signInWithEmailAndPassword(email, password)
         .then(userCredential => {
             const user = userCredential.user;
+
+            if (!user.displayName) {
+                alert("❌ Error: No tienes un nombre de usuario.");
+                auth.signOut();
+                return;
+            }
+
             db.collection("users").doc(user.uid).set({ online: true }, { merge: true });
 
-            console.log("✅ Inicio de sesión exitoso:", user.displayName || user.email);
+            console.log("✅ Inicio de sesión exitoso:", user.displayName);
             setTimeout(() => {
                 window.location.replace("chat.html");
             }, 2000);
@@ -73,12 +88,16 @@ function registerUser() {
     auth.createUserWithEmailAndPassword(email, password)
         .then(userCredential => {
             const user = userCredential.user;
-            return db.collection("users").doc(user.uid).set({
-                nickname: nickname,
-                email: user.email,
-                online: true,
-                userId: user.uid,
-                projectId: firebaseConfig.projectId
+            return user.updateProfile({
+                displayName: nickname
+            }).then(() => {
+                return db.collection("users").doc(user.uid).set({
+                    nickname: nickname,
+                    email: user.email,
+                    online: true,
+                    userId: user.uid,
+                    projectId: firebaseConfig.projectId
+                });
             });
         })
         .then(() => {
