@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         console.log("✅ Usuario autenticado:", user.displayName);
         const db = firebase.firestore();
+        const storage = firebase.storage();
         const mensajesContainer = document.getElementById("mensajes");
         const inputMensaje = document.getElementById("mensaje");
         const botonEnviar = document.getElementById("enviar");
@@ -34,14 +35,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Subir imagen si existe
             if (imagenSeleccionada) {
-                const storageRef = firebase.storage().ref();
-                const imagenRef = storageRef.child(`imagenes/${user.uid}/${imagenSeleccionada.name}`);
-                
-                await imagenRef.put(imagenSeleccionada);
-                const imagenURL = await imagenRef.getDownloadURL();
-                mensajeData.imagenURL = imagenURL;
+                console.log("📸 Imagen seleccionada:", imagenSeleccionada.name);
+
+                const storageRef = storage.ref();
+                const imagenRef = storageRef.child(`imagenes/${user.uid}/${Date.now()}_${imagenSeleccionada.name}`);
+
+                try {
+                    await imagenRef.put(imagenSeleccionada);
+                    console.log("✅ Imagen subida con éxito.");
+                    const imagenURL = await imagenRef.getDownloadURL();
+                    mensajeData.imagenURL = imagenURL;
+                } catch (error) {
+                    console.error("❌ Error al subir imagen:", error.message);
+                    alert("❌ Error al subir imagen: " + error.message);
+                    return;
+                }
             }
 
+            // Guardar mensaje en Firestore
             try {
                 await db.collection("mensajes").add(mensajeData);
                 console.log("✅ Mensaje enviado correctamente:", mensajeData);
