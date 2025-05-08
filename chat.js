@@ -1,13 +1,17 @@
 document.addEventListener("DOMContentLoaded", async function () {
-    if (!window.auth || !window.db) {
+    if (!firebase.apps.length) {
         console.error("❌ Firebase no se cargó correctamente.");
+        alert("❌ Error al cargar Firebase, verifica tu configuración.");
         return;
     }
 
-    const user = window.auth.currentUser;
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    const user = auth.currentUser;
     if (!user) {
         console.error("❌ No hay usuario autenticado.");
-        window.location.href = "login.html";
+        window.location.replace("login.html");
         return;
     }
 
@@ -20,7 +24,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // Mostrar usuarios conectados en tiempo real
     const usuariosList = document.getElementById("listaUsuarios");
-    window.db.collection("users").where("online", "==", true).onSnapshot(snapshot => {
+    db.collection("users").where("online", "==", true).onSnapshot(snapshot => {
         usuariosList.innerHTML = "";
         snapshot.docs.forEach(doc => {
             const usuario = doc.data();
@@ -50,13 +54,13 @@ document.addEventListener("DOMContentLoaded", async function () {
             mensajeData.imagen = imagenURL;
         }
 
-        await window.db.collection("mensajes").add(mensajeData);
+        await db.collection("mensajes").add(mensajeData);
         inputMensaje.value = "";
         inputImagen.value = "";
     });
 
     // Mostrar mensajes en tiempo real
-    window.db.collection("mensajes").orderBy("timestamp", "asc").onSnapshot(snapshot => {
+    db.collection("mensajes").orderBy("timestamp", "asc").onSnapshot(snapshot => {
         mensajesContainer.innerHTML = "";
         snapshot.docs.forEach(doc => {
             const mensaje = doc.data();
