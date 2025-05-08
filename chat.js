@@ -8,12 +8,19 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         console.log("✅ Usuario autenticado:", user.displayName);
 
-        // Inicializar Firebase solo después de que el usuario está autenticado
+        if (!firebase.firestore) {
+            console.error("❌ Firebase no se cargó correctamente.");
+            alert("❌ Error al cargar Firebase, verifica tu configuración.");
+            return;
+        }
+
         const db = firebase.firestore();
         const mensajesContainer = document.getElementById("mensajes");
         const inputMensaje = document.getElementById("mensaje");
         const inputImagen = document.getElementById("imagen");
         const botonEnviar = document.getElementById("enviar");
+
+        inputMensaje.disabled = false; // 🔥 Habilitar el cuadro de texto correctamente
 
         // Mostrar usuarios conectados en tiempo real
         const usuariosList = document.getElementById("listaUsuarios");
