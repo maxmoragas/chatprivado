@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Enviar mensaje o imagen
         botonEnviar.addEventListener("click", async () => {
             const mensajeTexto = inputMensaje.value.trim();
-            const imagenSeleccionada = imagenInput.files[0];
+            const imagenSeleccionada = imagenInput && imagenInput.files.length > 0 ? imagenInput.files[0] : null;
 
             if (!mensajeTexto && !imagenSeleccionada) {
                 alert("❌ Debes escribir un mensaje o seleccionar una imagen.");
@@ -28,36 +28,33 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             const mensajeData = {
-                usuario: user.displayName,
+                usuario: firebase.auth().currentUser.displayName,
                 mensaje: mensajeTexto || "",
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
             };
 
-            // Subir imagen si existe
-            if (imagenSeleccionada) {
-                console.log("📸 Imagen seleccionada:", imagenSeleccionada.name);
+            try {
+                // Subir imagen si existe
+                if (imagenSeleccionada) {
+                    console.log("📸 Subiendo imagen:", imagenSeleccionada.name);
 
-                const storageRef = storage.ref();
-                const imagenRef = storageRef.child(`imagenes/${user.uid}/${Date.now()}_${imagenSeleccionada.name}`);
+                    const storageRef = storage.ref();
+                    const imagenRef = storageRef.child(`imagenes/${firebase.auth().currentUser.uid}/${Date.now()}_${imagenSeleccionada.name}`);
 
-                try {
                     await imagenRef.put(imagenSeleccionada);
                     console.log("✅ Imagen subida con éxito.");
+                    
                     const imagenURL = await imagenRef.getDownloadURL();
-                    mensajeData.imagenURL = imagenURL;
-                } catch (error) {
-                    console.error("❌ Error al subir imagen:", error.message);
-                    alert("❌ Error al subir imagen: " + error.message);
-                    return;
+                    mensajeData.imagenURL = imagenURL; // 🔥 Agregar la URL al mensaje
                 }
-            }
 
-            // Guardar mensaje en Firestore
-            try {
+                // Guardar mensaje en Firestore
                 await db.collection("mensajes").add(mensajeData);
                 console.log("✅ Mensaje enviado correctamente:", mensajeData);
+                
                 inputMensaje.value = "";
-                imagenInput.value = ""; // Limpiar la selección de imagen
+                imagenInput.value = ""; // 🔥 Limpiar la selección de imagen
+
             } catch (error) {
                 console.error("❌ Error al enviar mensaje:", error.message);
                 alert("❌ Error al enviar mensaje: " + error.message);
