@@ -15,9 +15,8 @@ const db = firebase.firestore();
 // Manejar el estado de autenticación y redirigir correctamente
 auth.onAuthStateChanged(user => {
     if (user) {
-        console.log("✅ Usuario autenticado:", user.displayName);
+        console.log("✅ Usuario autenticado:", user.displayName || user.email);
 
-        // Guardar usuario en Firestore con estado "online"
         db.collection("users").doc(user.uid).set({
             nickname: user.displayName || "Usuario",
             email: user.email,
@@ -26,7 +25,6 @@ auth.onAuthStateChanged(user => {
             projectId: firebaseConfig.projectId
         }, { merge: true });
 
-        // 🔥 Redirigir al chat solo después de la autenticación correcta
         setTimeout(() => {
             window.location.replace("chat.html");
         }, 2000);
@@ -50,7 +48,6 @@ function login() {
         .then(userCredential => {
             const user = userCredential.user;
 
-            // Guardar estado "online" al iniciar sesión
             db.collection("users").doc(user.uid).set({
                 online: true
             }, { merge: true });
@@ -80,8 +77,7 @@ function register() {
 
     auth.createUserWithEmailAndPassword(email, password)
         .then(userCredential => {
-            let user = userCredential.user;
-
+            const user = userCredential.user;
             return db.collection("users").doc(user.uid).set({
                 nickname: nickname,
                 email: user.email,
@@ -93,7 +89,6 @@ function register() {
         .then(() => {
             console.log("✅ Usuario registrado correctamente!");
 
-            // 🔥 Redirigir solo después de que el usuario se haya guardado en Firestore
             setTimeout(() => {
                 window.location.replace("chat.html");
             }, 2000);
