@@ -14,7 +14,7 @@ h1 {
     text-align: center;
 }
 
-#login {
+#register, #login {
     background: white;
     color: black;
     padding: 20px;
