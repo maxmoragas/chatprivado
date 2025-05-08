@@ -1,9 +1,10 @@
+// 🔥 Importación de Firebase como módulo
 import { initializeApp } from "firebase/app";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, doc, setDoc } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
-// ✅ Tu configuración de Firebase
+// ✅ Configuración de Firebase (reemplaza con tus datos)
 const firebaseConfig = {
     apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
     authDomain: "michatprivado-f704a.firebaseapp.com",
@@ -18,6 +19,7 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
+// 🔥 Manejo de autenticación
 onAuthStateChanged(auth, user => {
     if (user && user.displayName) {
         console.log("✅ Usuario autenticado:", user.displayName);
@@ -35,3 +37,20 @@ onAuthStateChanged(auth, user => {
         console.log("❌ No hay usuario autenticado, redirigiendo a login...");
     }
 });
+
+// 🔥 Función de registro e inicio de sesión
+function loginUser() {
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    signInWithEmailAndPassword(auth, email, password)
+        .then(userCredential => {
+            console.log("✅ Usuario autenticado:", userCredential.user);
+            window.location.replace("chat.html");
+        })
+        .catch(error => {
+            console.error("❌ Error en login:", error.message);
+            alert("❌ Error al iniciar sesión: " + error.message);
+        });
+}
+window.loginUser = loginUser;
