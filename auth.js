@@ -16,10 +16,10 @@ const db = firebase.firestore();
 auth.onAuthStateChanged(user => {
     if (user) {
         console.log("✅ Usuario autenticado:", user.displayName || user.email);
-        
+
         if (!user.displayName) {
             alert("❌ Error: No tienes un nombre de usuario. Cierra sesión e intenta registrarte nuevamente.");
-            window.location.replace("login.html");
+            auth.signOut();
             return;
         }
 
@@ -27,8 +27,7 @@ auth.onAuthStateChanged(user => {
             nickname: user.displayName,
             email: user.email,
             online: true,
-            userId: user.uid,
-            projectId: firebaseConfig.projectId
+            userId: user.uid
         }, { merge: true });
 
         setTimeout(() => {
@@ -39,6 +38,47 @@ auth.onAuthStateChanged(user => {
         window.location.replace("login.html");
     }
 });
+
+// Función de registro
+function registerUser() {
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const nickname = document.getElementById("nickname").value.trim();
+
+    if (!email || !password || !nickname) {
+        alert("❌ Debes ingresar email, contraseña y un nombre de usuario.");
+        return;
+    }
+
+    auth.createUserWithEmailAndPassword(email, password)
+        .then(userCredential => {
+            const user = userCredential.user;
+            return user.updateProfile({ displayName: nickname }).then(() => {
+                return db.collection("users").doc(user.uid).set({
+                    nickname: nickname,
+                    email: user.email,
+                    online: true,
+                    userId: user.uid
+                });
+            });
+        })
+        .then(() => {
+            console.log("✅ Usuario registrado correctamente.");
+
+            setTimeout(() => {
+                if (auth.currentUser) {
+                    window.location.replace("chat.html");
+                } else {
+                    alert("❌ Hubo un problema con el registro. Intenta nuevamente.");
+                }
+            }, 2000);
+        })
+        .catch(error => {
+            console.error("❌ Error al registrarse:", error.message);
+            alert("❌ Error al registrarse: " + error.message);
+        });
+}
+window.registerUser = registerUser;
 
 // Función de login
 function loginUser() {
@@ -73,45 +113,6 @@ function loginUser() {
         });
 }
 window.loginUser = loginUser;
-
-// Función de registro
-function registerUser() {
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value.trim();
-    const nickname = document.getElementById("nickname").value.trim();
-
-    if (!email || !password || !nickname) {
-        alert("❌ Debes ingresar email, contraseña y un nombre de usuario.");
-        return;
-    }
-
-    auth.createUserWithEmailAndPassword(email, password)
-        .then(userCredential => {
-            const user = userCredential.user;
-            return user.updateProfile({
-                displayName: nickname
-            }).then(() => {
-                return db.collection("users").doc(user.uid).set({
-                    nickname: nickname,
-                    email: user.email,
-                    online: true,
-                    userId: user.uid,
-                    projectId: firebaseConfig.projectId
-                });
-            });
-        })
-        .then(() => {
-            console.log("✅ Usuario registrado correctamente.");
-            setTimeout(() => {
-                window.location.replace("chat.html");
-            }, 2000);
-        })
-        .catch(error => {
-            console.error("❌ Error al registrarse:", error.message);
-            alert("❌ Error al registrarse: " + error.message);
-        });
-}
-window.registerUser = registerUser;
 
 // Función de logout
 function logoutUser() {
