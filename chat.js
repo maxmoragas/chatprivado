@@ -1,4 +1,4 @@
-// 🔥 Importación de Firebase como módulo
+// 🔥 Importación de Firebase
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getFirestore, collection, addDoc, orderBy, query, onSnapshot } from "firebase/firestore";
@@ -14,6 +14,7 @@ const firebaseConfig = {
     appId: "1:187774286181:web:95fc9391a64d3d244e498c"
 };
 
+// 🔥 Inicialización de Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
