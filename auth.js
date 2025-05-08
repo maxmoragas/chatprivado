@@ -1,4 +1,4 @@
-// Configurar Firebase con los datos correctos
+// Configurar Firebase con los datos proporcionados
 const firebaseConfig = {
     apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
     authDomain: "michatprivado-f704a.firebaseapp.com",
@@ -37,7 +37,10 @@ auth.onAuthStateChanged(user => {
 });
 
 // Función para iniciar sesión con validación
-function login(email, password) {
+function login() {
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+
     if (!email || !password) {
         alert("❌ Debes ingresar tu email y contraseña!");
         return;
@@ -65,9 +68,13 @@ function login(email, password) {
 }
 
 // Función para registrar usuario con validación
-function register(email, password, nickname) {
+function register() {
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const nickname = document.getElementById("nickname").value.trim();
+
     if (!email || !password || !nickname) {
-        alert("❌ Debes ingresar email, contraseña y un nombre!");
+        alert("❌ Debes ingresar email, contraseña y un nombre de usuario!");
         return;
     }
 
