@@ -3,12 +3,12 @@ import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "https:/
 import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
-    authDomain: "michatprivado-f704a.firebaseapp.com",
-    projectId: "michatprivado-f704a",
-    storageBucket: "michatprivado-f704a.appspot.com",
-    messagingSenderId: "187774286181",
-    appId: "1:187774286181:web:95fc9391a64d3d244e498c"
+    apiKey: "TU_API_KEY",
+    authDomain: "michatprivado.firebaseapp.com",
+    projectId: "michatprivado",
+    storageBucket: "michatprivado.appspot.com",
+    messagingSenderId: "TU_MESSAGING_ID",
+    appId: "TU_APP_ID"
 };
 
 const app = initializeApp(firebaseConfig);
