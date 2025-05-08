@@ -3,12 +3,12 @@ document.addEventListener("DOMContentLoaded", function () {
     if (typeof firebase !== "undefined") {
         // Configuración de Firebase
         const firebaseConfig = {
-            apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
-            authDomain: "michatprivado-f704a.firebaseapp.com",
-            projectId: "michatprivado-f704a",
-            storageBucket: "michatprivado-f704a.appspot.com",
-            messagingSenderId: "187774286181",
-            appId: "1:187774286181:web:95fc9391a64d3d244e498c"
+            apiKey: "TU_API_KEY",
+            authDomain: "TU_AUTH_DOMAIN",
+            projectId: "TU_PROJECT_ID",
+            storageBucket: "TU_STORAGE_BUCKET",
+            messagingSenderId: "TU_MESSAGING_SENDER_ID",
+            appId: "TU_APP_ID"
         };
 
         // Inicializar Firebase
@@ -16,9 +16,9 @@ document.addEventListener("DOMContentLoaded", function () {
         window.auth = firebase.auth();
         window.db = firebase.firestore();
 
-        console.log("Firebase inicializado correctamente.");
+        console.log("✅ Firebase inicializado correctamente.");
     } else {
-        console.error("Firebase no se cargó correctamente.");
+        console.error("❌ Firebase no se cargó correctamente.");
     }
 });
 
