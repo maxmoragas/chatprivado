@@ -1,5 +1,6 @@
-// Cargar Firebase desde la CDN
+// Esperar a que Firebase se haya cargado correctamente antes de inicializarlo
 document.addEventListener("DOMContentLoaded", function () {
+    // Configuración de Firebase
     const firebaseConfig = {
         apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
         authDomain: "michatprivado-f704a.firebaseapp.com",
@@ -9,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
         appId: "1:187774286181:web:95fc9391a64d3d244e498c"
     };
 
+    // Inicializar Firebase
     firebase.initializeApp(firebaseConfig);
     window.auth = firebase.auth();
     window.db = firebase.firestore();
