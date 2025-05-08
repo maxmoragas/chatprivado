@@ -34,6 +34,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 mensaje: mensajeTexto,
                 timestamp: new Date()
             });
+
+            document.getElementById("mensaje").value = "";
         });
     });
 });
