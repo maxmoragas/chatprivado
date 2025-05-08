@@ -1,6 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
 const firebaseConfig = {
     apiKey: "TU_API_KEY",
@@ -13,21 +12,20 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db = getFirestore(app);
 
-onAuthStateChanged(auth, user => {
-    if (user) {
-        console.log("✅ Usuario autenticado:", user.displayName);
-        setDoc(doc(db, "users", user.uid), {
-            nickname: user.displayName,
-            email: user.email,
-            online: true,
-            userId: user.uid
-        }, { merge: true });
+function registerUser() {
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
 
-        window.location.replace("chat.html");
-    }
-});
+    createUserWithEmailAndPassword(auth, email, password)
+        .then(() => {
+            alert("✅ Registro exitoso. Ahora puedes iniciar sesión.");
+            window.location.replace("login.html");
+        })
+        .catch(error => {
+            alert("❌ Error al registrar: " + error.message);
+        });
+}
 
 function loginUser() {
     const email = document.getElementById("email").value.trim();
@@ -41,4 +39,6 @@ function loginUser() {
             alert("❌ Error al iniciar sesión: " + error.message);
         });
 }
+
+window.registerUser = registerUser;
 window.loginUser = loginUser;
