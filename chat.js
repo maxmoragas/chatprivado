@@ -12,27 +12,41 @@ document.addEventListener("DOMContentLoaded", function () {
         const mensajesContainer = document.getElementById("mensajes");
         const inputMensaje = document.getElementById("mensaje");
         const botonEnviar = document.getElementById("enviar");
+        const imagenInput = document.getElementById("imagenInput");
 
         inputMensaje.disabled = false;
 
-        // Enviar mensaje
+        // Enviar mensaje o imagen
         botonEnviar.addEventListener("click", async () => {
             const mensajeTexto = inputMensaje.value.trim();
-            if (!mensajeTexto) {
-                alert("❌ No puedes enviar un mensaje vacío.");
+            const imagenSeleccionada = imagenInput.files[0];
+
+            if (!mensajeTexto && !imagenSeleccionada) {
+                alert("❌ Debes escribir un mensaje o seleccionar una imagen.");
                 return;
             }
 
             const mensajeData = {
                 usuario: user.displayName,
-                mensaje: mensajeTexto,
+                mensaje: mensajeTexto || "",
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
             };
+
+            // Subir imagen si existe
+            if (imagenSeleccionada) {
+                const storageRef = firebase.storage().ref();
+                const imagenRef = storageRef.child(`imagenes/${user.uid}/${imagenSeleccionada.name}`);
+                
+                await imagenRef.put(imagenSeleccionada);
+                const imagenURL = await imagenRef.getDownloadURL();
+                mensajeData.imagenURL = imagenURL;
+            }
 
             try {
                 await db.collection("mensajes").add(mensajeData);
                 console.log("✅ Mensaje enviado correctamente:", mensajeData);
                 inputMensaje.value = "";
+                imagenInput.value = ""; // Limpiar la selección de imagen
             } catch (error) {
                 console.error("❌ Error al enviar mensaje:", error.message);
                 alert("❌ Error al enviar mensaje: " + error.message);
@@ -46,6 +60,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 const mensaje = doc.data();
                 const mensajeElement = document.createElement("div");
                 mensajeElement.innerHTML = `<b>${mensaje.usuario}:</b> ${mensaje.mensaje}`;
+
+                if (mensaje.imagenURL) {
+                    const imagenElement = document.createElement("img");
+                    imagenElement.src = mensaje.imagenURL;
+                    imagenElement.style.maxWidth = "200px";
+                    mensajesContainer.appendChild(imagenElement);
+                }
+
                 mensajesContainer.appendChild(mensajeElement);
             });
         });
