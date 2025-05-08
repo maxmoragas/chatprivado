@@ -26,13 +26,13 @@ auth.onAuthStateChanged(user => {
             projectId: firebaseConfig.projectId
         }, { merge: true });
 
-        // 🔥 Redirigir al chat de forma segura
+        // 🔥 Redirigir al chat solo después de la autenticación correcta
         setTimeout(() => {
-            window.location.assign("chat.html");
+            window.location.replace("chat.html");
         }, 2000);
     } else {
         console.log("❌ No hay usuario autenticado, redirigiendo a login...");
-        window.location.assign("login.html");
+        window.location.replace("login.html");
     }
 });
 
@@ -58,7 +58,7 @@ function login() {
             console.log("✅ Inicio de sesión exitoso:", user.displayName);
 
             setTimeout(() => {
-                window.location.assign("chat.html");
+                window.location.replace("chat.html");
             }, 2000);
         })
         .catch(error => {
@@ -93,9 +93,9 @@ function register() {
         .then(() => {
             console.log("✅ Usuario registrado correctamente!");
 
-            // 🔥 Solo redirigir después de que el usuario se haya guardado en Firestore
+            // 🔥 Redirigir solo después de que el usuario se haya guardado en Firestore
             setTimeout(() => {
-                window.location.assign("chat.html");
+                window.location.replace("chat.html");
             }, 2000);
         })
         .catch(error => {
@@ -116,7 +116,7 @@ function logout() {
     auth.signOut()
         .then(() => {
             console.log("✅ Sesión cerrada correctamente.");
-            window.location.assign("login.html");
+            window.location.replace("login.html");
         })
         .catch(error => {
             console.error("❌ Error al cerrar sesión:", error.message);
