@@ -12,7 +12,7 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-// Manejo de autenticación, evitando redirecciones prematuras
+// Manejo de autenticación
 document.addEventListener("DOMContentLoaded", function () {
     auth.onAuthStateChanged(user => {
         if (user && user.displayName) {
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-// Función de registro con validación y espera antes de redirigir
+// Función de registro
 function registerUser() {
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
