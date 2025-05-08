@@ -3,11 +3,11 @@ import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWith
 
 const firebaseConfig = {
     apiKey: "TU_API_KEY",
-    authDomain: "michatprivado.firebaseapp.com",
-    projectId: "michatprivado",
-    storageBucket: "michatprivado.appspot.com",
-    messagingSenderId: "TU_MESSAGING_ID",
-    appId: "TU_APP_ID"
+    authDomain: "michatprivado-f704a.firebaseapp.com",
+    projectId: "michatprivado-f704a",
+    storageBucket: "michatprivado-f704a.appspot.com",
+    messagingSenderId: "187774286181",
+    appId: "1:187774286181:web:95fc9391a64d3d244e498c"
 };
 
 const app = initializeApp(firebaseConfig);
