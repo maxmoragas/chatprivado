@@ -1,19 +1,15 @@
-async function registerUser(email, password, nickname) {
-    try {
-        const userCredential = await window.auth.createUserWithEmailAndPassword(email, password);
-        const user = userCredential.user;
+const firebaseConfig = {
+    apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
+    authDomain: "michatprivado-f704a.firebaseapp.com",
+    projectId: "michatprivado-f704a",
+    storageBucket: "michatprivado-f704a.appspot.com",
+    messagingSenderId: "187774286181",
+    appId: "1:187774286181:web:95fc9391a64d3d244e498c"
+};
 
-        await user.updateProfile({ displayName: nickname });
-        await window.db.collection("users").doc(user.uid).set({ nickname, email: user.email, online: true });
+// Inicializar Firebase correctamente
+const firebaseApp = firebase.initializeApp(firebaseConfig); 
+window.auth = firebaseApp.auth();
+window.db = firebaseApp.firestore();
 
-        console.log("✅ Usuario registrado con nickname:", nickname);
-        window.location.href = "salachat.html"; // Redirigir al chat después del registro
-        return true;
-    } catch (error) {
-        console.error("❌ Error en el registro:", error.message);
-        return false;
-    }
-}
-
-// 💡 **IMPORTANTE:** Asegurar que la función sea accesible globalmente
-window.registerUser = registerUser;
+console.log("✅ Firebase inicializado correctamente.");
