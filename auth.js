@@ -1,5 +1,6 @@
-// Esperar a que Firebase esté disponible antes de inicializarlo
+// Esperar a que Firebase se haya cargado antes de inicializar
 document.addEventListener("DOMContentLoaded", function () {
+    // Configuración de Firebase
     const firebaseConfig = {
         apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
         authDomain: "michatprivado-f704a.firebaseapp.com",
@@ -9,15 +10,12 @@ document.addEventListener("DOMContentLoaded", function () {
         appId: "1:187774286181:web:95fc9391a64d3d244e498c"
     };
 
-    // Inicializar Firebase SOLO si la variable está disponible
-    if (typeof firebase !== "undefined") {
-        firebase.initializeApp(firebaseConfig);
-        window.auth = firebase.auth();
-        window.db = firebase.firestore();
-        console.log("Firebase inicializado correctamente.");
-    } else {
-        console.error("Firebase no se cargó correctamente.");
-    }
+    // Inicializar Firebase
+    firebase.initializeApp(firebaseConfig);
+    window.auth = firebase.auth();
+    window.db = firebase.firestore();
+
+    console.log("Firebase inicializado correctamente.");
 });
 
 // Función de registro de usuario
