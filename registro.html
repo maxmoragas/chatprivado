@@ -36,7 +36,7 @@
             const password = document.getElementById("password").value;
             const nickname = document.getElementById("nickname").value;
             
-            const success = await registerUser(email, password, nickname);
+            const success = await window.registerUser(email, password, nickname);
             
             if (success) {
                 alert("¡Usuario registrado exitosamente!");
