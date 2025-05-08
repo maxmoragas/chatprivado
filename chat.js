@@ -1,39 +1,45 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-import { getFirestore, collection, addDoc, orderBy, query, onSnapshot } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
 
 const firebaseConfig = {
-    apiKey: "TU_API_KEY",
-    authDomain: "michatprivado.firebaseapp.com",
-    projectId: "michatprivado",
-    storageBucket: "michatprivado.appspot.com",
-    messagingSenderId: "TU_MESSAGING_ID",
-    appId: "TU_APP_ID"
+    apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
+    authDomain: "michatprivado-f704a.firebaseapp.com",
+    projectId: "michatprivado-f704a",
+    storageBucket: "michatprivado-f704a.appspot.com",
+    messagingSenderId: "187774286181",
+    appId: "1:187774286181:web:95fc9391a64d3d244e498c"
 };
 
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
-document.addEventListener("DOMContentLoaded", function () {
-    onAuthStateChanged(auth, user => {
-        if (!user) {
-            alert("❌ Error: Usuario no autenticado.");
-            window.location.replace("login.html");
-            return;
-        }
+async function sendMessage() {
+    const user = auth.currentUser;
+    if (!user) {
+        alert("❌ Debes estar autenticado para enviar mensajes.");
+        return;
+    }
 
-        document.getElementById("enviar").addEventListener("click", async () => {
-            const mensajeTexto = document.getElementById("mensaje").value.trim();
-            if (!mensajeTexto) return;
+    const message = document.getElementById("message").value.trim();
+    if (!message) {
+        alert("❌ El mensaje no puede estar vacío.");
+        return;
+    }
 
-            await addDoc(collection(db, "mensajes"), {
-                usuario: user.displayName,
-                mensaje: mensajeTexto,
-                timestamp: new Date()
-            });
-
-            document.getElementById("mensaje").value = "";
+    try {
+        await addDoc(collection(db, "messages"), {
+            userId: user.uid,
+            message: message,
+            timestamp: new Date()
         });
-    });
-});
+        alert("✅ Mensaje enviado correctamente.");
+        document.getElementById("message").value = "";
+    } catch (error) {
+        console.error("Error al enviar mensaje:", error);
+        alert("❌ Error al enviar mensaje: " + error.message);
+    }
+}
+
+window.sendMessage = sendMessage;
