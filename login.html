@@ -2,32 +2,40 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Login - LLA Bragado</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="auth.js"></script>
+    
+    <!-- Cargar Firebase desde la CDN -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="auth.js"></script> <!-- Cargar auth.js después de Firebase -->
 </head>
 <body>
-    <h2>Iniciar sesión</h2>
+    <h1>Iniciar Sesión</h1>
+    
+    <form id="loginForm">
+        <label for="email">Correo:</label>
+        <input type="email" id="email" required>
 
-    <input type="email" id="loginEmail" placeholder="Email">
-    <input type="password" id="loginPassword" placeholder="Contraseña">
-    <button onclick="login()">Ingresar</button>
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" required>
 
-    <p>¿No tienes cuenta? <a href="registro.html">Regístrate aquí</a></p>
+        <button type="button" id="loginButton">Ingresar</button>
+    </form>
 
     <script>
-        async function login() {
-            let email = document.getElementById("loginEmail").value;
-            let password = document.getElementById("loginPassword").value;
+        document.getElementById("loginButton").addEventListener("click", async () => {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
             
-            let nickname = await loginUser(email, password);
-            if (nickname) {
-                localStorage.setItem("nickname", nickname);
-                window.location.href = "salachat.html"; // Redirección corregida
-            } else {
-                alert("Error en login. Verifica tu email y contraseña.");
+            const success = await window.loginUser(email, password);
+            
+            if (!success) {
+                alert("Error en el inicio de sesión. Revisa la consola.");
             }
-        }
+        });
     </script>
 </body>
 </html>
