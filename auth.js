@@ -10,14 +10,20 @@ const firebaseConfig = {
     appId: "1:187774286181:web:95fc9391a64d3d244e498c"
 };
 
+// ✅ Inicialización de Firebase con verificación en consola
 const app = initializeApp(firebaseConfig);
-console.log("Firebase inicializado correctamente:", app);
+console.log("🔥 Firebase inicializado correctamente:", app);
 
 const auth = getAuth(app);
 
 function registerUser() {
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
+
+    if (!email || !password) {
+        alert("❌ Debes ingresar un correo y una contraseña válidos.");
+        return;
+    }
 
     createUserWithEmailAndPassword(auth, email, password)
         .then(() => {
@@ -33,6 +39,11 @@ function registerUser() {
 function loginUser() {
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
+
+    if (!email || !password) {
+        alert("❌ Debes ingresar un correo y una contraseña válidos.");
+        return;
+    }
 
     signInWithEmailAndPassword(auth, email, password)
         .then(() => {
