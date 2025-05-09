@@ -17,47 +17,38 @@ const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
 // Manejo de autenticación y redirección
-document.getElementById("loginButton").addEventListener("click", () => {
+function loginUser() {
   signInWithPopup(auth, provider)
     .then((result) => {
-      console.log("Usuario autenticado:", result.user);
-      actualizarNickname(result.user);
+      console.log("✅ Usuario autenticado:", result.user);
       window.location.href = "chat.html"; // Redirigir después de iniciar sesión
     })
     .catch((error) => {
-      console.error("Error al iniciar sesión:", error);
+      console.error("🚨 Error al iniciar sesión:", error);
     });
-});
+}
 
-document.getElementById("logoutButton").addEventListener("click", () => {
+document.getElementById("loginButton").addEventListener("click", loginUser);
+
+function logoutUser() {
   signOut(auth)
     .then(() => {
-      console.log("Usuario cerró sesión.");
-      document.getElementById("nickname").textContent = "Invitado";
-      window.location.href = "index.html"; // Redirigir al cerrar sesión
+      console.log("✅ Usuario cerró sesión.");
+      window.location.href = "index.html"; // Redirigir al inicio
     })
     .catch((error) => {
-      console.error("Error al cerrar sesión:", error);
+      console.error("🚨 Error al cerrar sesión:", error);
     });
-});
+}
 
-// Actualizar nickname en la interfaz
-function actualizarNickname(user) {
+document.getElementById("logoutButton").addEventListener("click", logoutUser);
+
+// Verificación de autenticación
+onAuthStateChanged(auth, (user) => {
   const nicknameElement = document.getElementById("nickname");
   if (user) {
     nicknameElement.textContent = user.displayName || "Usuario sin nombre";
   } else {
     nicknameElement.textContent = "Invitado";
-  }
-}
-
-// Verificación de estado de autenticación
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    console.log("Usuario autenticado automáticamente:", user);
-    actualizarNickname(user);
-  } else {
-    console.log("No hay usuario autenticado.");
-    document.getElementById("nickname").textContent = "Invitado";
   }
 });
