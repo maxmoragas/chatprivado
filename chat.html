@@ -5,28 +5,119 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat - LLA BRAGADO</title>
 
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js"></script>
-    <script src="firebaseConfig.js"></script>
+    <!-- 🔥 Firebase v8 para evitar errores de módulos ES6 -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            try {
+                const firebaseConfig = {
+                    apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
+                    authDomain: "michatprivado-f704a.firebaseapp.com",
+                    databaseURL: "https://michatprivado-f704a-default-rtdb.firebaseio.com",
+                    projectId: "michatprivado-f704a",
+                    storageBucket: "michatprivado-f704a.appspot.com",
+                    messagingSenderId: "187774286181",
+                    appId: "1:187774286181:web:95fc9391a64d3d244e498c"
+                };
+
+                firebase.initializeApp(firebaseConfig);
+                window.auth = firebase.auth();
+                window.db = firebase.database();
+                window.storage = firebase.storage();
+
+                console.log("✅ Firebase cargado correctamente.");
+            } catch (error) {
+                console.error("🚨 Error al cargar Firebase:", error);
+            }
+        });
+    </script>
+    <script src="chat.js"></script>
 
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; background-color: rgb(138,43,226); color: white; }
-        h2 { font-size: 32px; text-transform: uppercase; }
-        #chatContainer { max-width: 400px; margin: auto; padding: 10px; border: 1px solid #ddd; background-color: white; color: black; }
-        #onlineUsers { margin-top: 15px; font-size: 14px; color: yellow; }
-        button { background-color: #d3d3d3; color: black; font-weight: bold; padding: 8px; border: none; }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: rgb(138,43,226);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h2 {
+            font-size: 36px;
+            font-weight: bold;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        #chatContainer {
+            max-width: 600px;
+            width: 90%;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: rgb(98,0,234);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        #messageInput {
+            width: 100%;
+            height: 80px;
+            padding: 8px;
+            font-size: 16px;
+            background-color: white;
+            color: black;
+            border: 1px solid black;
+            resize: none;
+        }
+
+        #sendMessage, #uploadImage, #showOnlineUsers {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 5px;
+            background-color: #d3d3d3;
+            color: black;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+
+        #sendMessage:hover, #uploadImage:hover, #showOnlineUsers:hover {
+            background-color: #bdbdbd;
+        }
+
+        #messages {
+            width: 100%;
+            max-height: 300px;
+            overflow-y: auto;
+            text-align: left;
+            background-color: white;
+            color: black;
+            padding: 10px;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
-    <h2>Chat - LLA BRAGADO</h2>
-    <button onclick="logout()">Cerrar sesión</button>
-
-    <div id="onlineUsers">Usuarios en línea:</div>
-    <div id="chatContainer"></div>
-    <input type="text" id="messageInput" placeholder="Escribe un mensaje">
-    <button id="sendMessage">Enviar</button>
-
-    <script src="chat.js"></script>
+    <h2>LLA BRAGADO - Chat</h2>
+    <div id="chatContainer">
+        <div id="messages"></div>
+        <textarea id="messageInput" placeholder="Escribe tu mensaje aquí..."></textarea>
+        <button id="sendMessage">Enviar Mensaje</button>
+        <input type="file" id="imageInput">
+        <button id="uploadImage">Enviar Imagen</button>
+        <button id="showOnlineUsers">Usuarios en Línea</button>
+        <div id="onlineUsers" style="display:none;"></div>
+    </div>
 </body>
 </html>
