@@ -90,6 +90,13 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+            if (typeof firebase === "undefined") {
+                console.error("🚨 Firebase NO se está cargando en index.html");
+                return;
+            }
+
+            console.log("✅ Firebase cargado en index.html:", firebase);
+
             const firebaseConfig = {
                 apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
                 authDomain: "michatprivado-f704a.firebaseapp.com",
@@ -100,10 +107,6 @@
             };
 
             firebase.initializeApp(firebaseConfig);
-            
-            // 🔍 Confirmar si Firebase está cargando correctamente en index.html
-            console.log("🚀 Confirmando carga de Firebase en index.html:", window.firebase);
-            console.log("🛠 Probando carga de Firebase desde index.html:", typeof firebase);
         });
     </script>
 </body>
