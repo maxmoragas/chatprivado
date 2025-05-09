@@ -1,8 +1,8 @@
 console.log("🔍 chat.js se está ejecutando...");
 console.log("🔍 Verificando acceso a Firebase desde chat.js:", typeof window.firebase);
 
-document.addEventListener("firebase-load-complete", () => {
-    console.log("✅ Firebase finalmente disponible en chat.js:", window.firebase);
+window.addEventListener("firebase-load-complete", () => {
+    console.log("✅ Firebase disponible en chat.js:", window.firebase);
     iniciarFirebase();
 });
 
