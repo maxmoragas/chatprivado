@@ -12,21 +12,36 @@
     <script src="firebaseConfig.js"></script>
 
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; background-color: rgb(138,43,226); }
-        h2 { color: white; }
+        /* 🔥 Fondo violeta en toda la pantalla */
+        body { 
+            font-family: Arial, sans-serif; 
+            text-align: center; 
+            background-color: rgb(138,43,226); 
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 🔥 Estilos del contenedor sin fondo blanco */
         #loginContainer { 
             max-width: 400px; 
-            margin: auto; 
+            width: 90%;
             padding: 20px; 
             border-radius: 5px; 
-            background: white; 
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 15px;
         }
-        label { display: block; text-align: left; width: 100%; font-weight: bold; }
+
+        /* 🔥 Labels en columna */
+        label { display: block; text-align: left; width: 100%; font-weight: bold; color: white; }
         input, button { width: 100%; padding: 8px; font-size: 16px; margin-top: 5px; }
+
+        /* 🔥 Imagen del león */
         img { max-width: 200px; }
     </style>
 </head>
