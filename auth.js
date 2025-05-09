@@ -18,7 +18,7 @@ window.registerUser = function() {
                 nickname: nickname,
                 email: email
             });
-            localStorage.setItem("nickname", nickname); // 🔥 Guardar nickname
+            localStorage.setItem("nickname", nickname);
             alert("¡Registro exitoso! Bienvenido, " + nickname);
         })
         .catch((error) => {
