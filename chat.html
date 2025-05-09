@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat Privado</title>
+    <link rel="stylesheet" href="styles.css">
     <script type="module" src="chat.js"></script>
 </head>
 <body>
@@ -11,10 +12,15 @@
 
     <p>Usuario: <span id="nickname">Invitado</span></p>
 
-    <div id="chatBox"></div>
+    <div id="chatContainer">
+        <div id="chatBox"></div>
+    </div>
 
-    <input type="text" id="messageInput" placeholder="Escribe un mensaje...">
-    <button id="sendMessage">Enviar</button>
+    <div id="messageControls">
+        <input type="text" id="messageInput" placeholder="Escribe un mensaje...">
+        <input type="file" id="fileInput">
+        <button id="sendMessage">Enviar</button>
+    </div>
 
     <button id="logoutButton">Cerrar sesión</button>
 </body>
