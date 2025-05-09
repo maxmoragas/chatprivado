@@ -11,7 +11,11 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            // 🔥 Inicialización de Firebase con tus datos
+            if (typeof firebase === "undefined") {
+                console.error("Firebase no ha sido cargado correctamente.");
+                return;
+            }
+            
             const firebaseConfig = {
                 apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
                 authDomain: "michatprivado-f704a.firebaseapp.com",
