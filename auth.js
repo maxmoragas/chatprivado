@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
     });
 
-    // Inicio de sesión
+    // Inicio de sesión con redirección a chat.html
     document.getElementById("loginButton").addEventListener("click", () => {
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
@@ -33,6 +33,9 @@ document.addEventListener("DOMContentLoaded", () => {
             .then((userCredential) => {
                 console.log("✅ Inicio de sesión exitoso:", userCredential.user);
                 alert("Bienvenido");
+
+                // Redirigir al chat después del login exitoso
+                window.location.href = "chat.html";
             })
             .catch((error) => {
                 console.error("🚨 Error en el login:", error.message);
