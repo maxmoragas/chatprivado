@@ -1,12 +1,12 @@
 window.onload = function() {
     function verificarFirebase() {
         if (typeof firebase === "undefined") {
-            console.error("🚨 Firebase sigue sin estar disponible. Reintentando en 2 segundos...");
+            console.error("🚨 Firebase sigue sin estar disponible en chat.js. Reintentando en 2 segundos...");
             setTimeout(verificarFirebase, 2000);
             return;
         }
 
-        console.log("✅ Firebase cargado correctamente en chat.js:", firebase);
+        console.log("✅ Firebase ya está disponible en chat.js:", firebase);
         iniciarFirebase();
     }
 
@@ -14,16 +14,7 @@ window.onload = function() {
 };
 
 function iniciarFirebase() {
-    console.log("✅ Inicializando Firebase en chat.js...");
-
-    const app = firebase.initializeApp({
-        apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
-        authDomain: "michatprivado-f704a.firebaseapp.com",
-        projectId: "michatprivado-f704a",
-        storageBucket: "michatprivado-f704a.appspot.com",
-        messagingSenderId: "187774286181",
-        appId: "1:187774286181:web:95fc9391a64d3d244e498c"
-    });
+    console.log("✅ Usando la instancia de Firebase creada en index.html.");
 
     const db = firebase.database();
     const auth = firebase.auth();
