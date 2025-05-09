@@ -10,22 +10,27 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js"></script>
     <script>
-        // 🔥 Configuración y carga de Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
-            authDomain: "michatprivado-f704a.firebaseapp.com",
-            databaseURL: "https://michatprivado-f704a-default-rtdb.firebaseio.com",
-            projectId: "michatprivado-f704a",
-            storageBucket: "michatprivado-f704a.appspot.com",
-            messagingSenderId: "187774286181",
-            appId: "1:187774286181:web:95fc9391a64d3d244e498c"
-        };
+        document.addEventListener("DOMContentLoaded", () => {
+            try {
+                const firebaseConfig = {
+                    apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
+                    authDomain: "michatprivado-f704a.firebaseapp.com",
+                    databaseURL: "https://michatprivado-f704a-default-rtdb.firebaseio.com",
+                    projectId: "michatprivado-f704a",
+                    storageBucket: "michatprivado-f704a.appspot.com",
+                    messagingSenderId: "187774286181",
+                    appId: "1:187774286181:web:95fc9391a64d3d244e498c"
+                };
 
-        firebase.initializeApp(firebaseConfig);
-        window.auth = firebase.auth();
-        window.db = firebase.database();
-        
-        console.log("✅ Firebase cargado correctamente.");
+                firebase.initializeApp(firebaseConfig);
+                window.auth = firebase.auth();
+                window.db = firebase.database();
+
+                console.log("✅ Firebase cargado correctamente.");
+            } catch (error) {
+                console.error("🚨 Error al cargar Firebase:", error);
+            }
+        });
     </script>
     <script src="auth.js"></script>
 
@@ -68,19 +73,14 @@
 <body>
     <h2>LLA BRAGADO</h2>
     <img src="leon.png" alt="León">
-
     <div id="loginContainer">
         <h3>Iniciar sesión / Registrarse</h3>
-
         <label for="nickname">Nickname:</label>
         <input type="text" id="nickname" placeholder="Tu apodo">
-
         <label for="email">Correo:</label>
         <input type="email" id="email" placeholder="Correo">
-
         <label for="password">Contraseña:</label>
         <input type="password" id="password" placeholder="Contraseña">
-
         <button onclick="registerUser()">Registrarse</button>
         <button onclick="loginUser()">Iniciar Sesión</button>
     </div>
