@@ -1,20 +1,18 @@
 window.onload = function() {
-    if (!window.firebase) {
-        console.error("🚨 Firebase sigue sin estar disponible. Intentando nuevamente en 2 segundos...");
-        setTimeout(() => {
-            if (!window.firebase) {
-                console.error("🚨 Firebase definitivamente no está disponible.");
-                return;
-            }
-            iniciarFirebase();
-        }, 2000);
-        return;
+    function verificarFirebase() {
+        if (!window.firebase) {
+            console.error("🚨 Firebase sigue sin estar disponible. Reintentando en 2 segundos...");
+            setTimeout(verificarFirebase, 2000);
+            return;
+        }
+        iniciarFirebase();
     }
-    iniciarFirebase();
+
+    verificarFirebase();
 };
 
 function iniciarFirebase() {
-    console.log("✅ Firebase cargado correctamente:", firebase);
+    console.log("✅ Firebase ahora está disponible:", firebase);
 
     const app = firebase.initializeApp({
         apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
