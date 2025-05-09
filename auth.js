@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-// 🔥 Función para registrar usuarios con nickname
 window.registerUser = function() {
     const nickname = document.getElementById("nickname").value;
     const email = document.getElementById("email").value;
@@ -19,6 +18,7 @@ window.registerUser = function() {
                 nickname: nickname,
                 email: email
             });
+            localStorage.setItem("nickname", nickname); // 🔥 Guardar nickname
             alert("¡Registro exitoso! Bienvenido, " + nickname);
         })
         .catch((error) => {
@@ -26,13 +26,15 @@ window.registerUser = function() {
         });
 };
 
-// 🔥 Función para iniciar sesión
 window.loginUser = function() {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
     firebase.auth().signInWithEmailAndPassword(email, password)
-        .then(() => {
+        .then((userCredential) => {
+            firebase.database().ref("users/" + userCredential.user.uid).once("value").then((snapshot) => {
+                localStorage.setItem("nickname", snapshot.val().nickname);
+            });
             alert("¡Inicio de sesión exitoso!");
         })
         .catch((error) => {
