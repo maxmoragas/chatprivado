@@ -10,18 +10,21 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js"></script>
 
     <script>
-        // 🔥 Inicialización de Firebase con tus datos
-        const firebaseConfig = {
-            apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
-            authDomain: "michatprivado-f704a.firebaseapp.com",
-            databaseURL: "https://michatprivado-f704a.firebaseio.com",
-            projectId: "michatprivado-f704a",
-            storageBucket: "michatprivado-f704a.appspot.com",
-            messagingSenderId: "187774286181",
-            appId: "1:187774286181:web:95fc9391a64d3d244e498c"
-        };
+        window.onload = function () {
+            // 🔥 Inicialización de Firebase con tus datos
+            const firebaseConfig = {
+                apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
+                authDomain: "michatprivado-f704a.firebaseapp.com",
+                databaseURL: "https://michatprivado-f704a.firebaseio.com",
+                projectId: "michatprivado-f704a",
+                storageBucket: "michatprivado-f704a.appspot.com",
+                messagingSenderId: "187774286181",
+                appId: "1:187774286181:web:95fc9391a64d3d244e498c"
+            };
 
-        firebase.initializeApp(firebaseConfig);
+            firebase.initializeApp(firebaseConfig);
+            window.db = firebase.database(); // 🔥 Guardar Firebase en `window` para que `chat.js` pueda usarlo
+        };
     </script>
 
     <style>
