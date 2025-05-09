@@ -23,31 +23,3 @@ document.addEventListener("DOMContentLoaded", () => {
 
     console.log("✅ Firebase está listo para autenticación y base de datos.");
 });
-
-// 🔥 Función para registrar usuarios
-window.registerUser = function() {
-    const email = document.getElementById("registerEmail").value;
-    const password = document.getElementById("registerPassword").value;
-
-    window.auth.createUserWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-            alert("¡Registro exitoso! Bienvenido, " + userCredential.user.email);
-        })
-        .catch((error) => {
-            alert("Error: " + error.message);
-        });
-};
-
-// 🔥 Función para iniciar sesión
-window.loginUser = function() {
-    const email = document.getElementById("loginEmail").value;
-    const password = document.getElementById("loginPassword").value;
-
-    window.auth.signInWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-            alert("¡Inicio de sesión exitoso! Bienvenido, " + userCredential.user.email);
-        })
-        .catch((error) => {
-            alert("Error: " + error.message);
-        });
-};
