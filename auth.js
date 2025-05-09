@@ -16,11 +16,6 @@ window.registerUser = function() {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
-    if (!window.auth) {
-        console.error("🚨 Firebase NO está inicializado correctamente.");
-        return;
-    }
-
     firebase.auth().createUserWithEmailAndPassword(email, password)
         .then((userCredential) => {
             const user = userCredential.user;
@@ -34,11 +29,6 @@ window.registerUser = function() {
 window.loginUser = function() {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
-
-    if (!window.auth) {
-        console.error("🚨 Firebase NO está inicializado correctamente.");
-        return;
-    }
 
     firebase.auth().signInWithEmailAndPassword(email, password)
         .then((userCredential) => {
