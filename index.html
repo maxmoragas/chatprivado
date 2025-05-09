@@ -107,10 +107,12 @@
             // 📌 Compartir Firebase con chat.js
             window.firebaseInstance = firebase;
 
-            // ✅ Cargar chat.js solo cuando Firebase esté listo
-            const scriptChat = document.createElement("script");
-            scriptChat.src = "chat.js";
-            document.body.appendChild(scriptChat);
+            // ✅ Cargar chat.js después de 1 segundo para evitar conflictos en la ejecución
+            setTimeout(() => {
+                const scriptChat = document.createElement("script");
+                scriptChat.src = "chat.js";
+                document.body.appendChild(scriptChat);
+            }, 1000);
         });
     </script>
 </body>
