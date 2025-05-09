@@ -100,17 +100,21 @@
             };
 
             firebase.initializeApp(firebaseConfig);
-            
-            console.log("🚀 Confirmando carga de Firebase en index.html:", firebase);
-            console.log("✅ Firebase Auth:", typeof firebase.auth);
-            
-            // 📌 Esperar a que Firebase esté completamente listo antes de asignarlo
-            setTimeout(() => {
+            console.log("🚀 Firebase cargado en index.html:", firebase);
+
+            function esperarFirebase() {
+                if (typeof firebase === "undefined") {
+                    console.warn("⏳ Esperando que Firebase se cargue correctamente...");
+                    setTimeout(esperarFirebase, 1000);
+                    return;
+                }
+
                 window.firebase = firebase;
                 console.log("✅ Firebase asignado correctamente a window.firebase");
-
                 window.dispatchEvent(new Event("firebase-load-complete"));
-            }, 1000);
+            }
+
+            esperarFirebase();
         });
     </script>
 
