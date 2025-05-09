@@ -1,90 +1,60 @@
-import { initializeApp } from "firebase/app";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { getDatabase, ref, onValue, push, set } from "firebase/database";
-import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
+// Conectar Firebase
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js";
+import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database-compat.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js";
 
-// Configuración de Firebase con tus datos
+// Configuración de Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
-  authDomain: "michatprivado-f704a.firebaseapp.com",
-  projectId: "michatprivado-f704a",
-  storageBucket: "michatprivado-f704a.appspot.com",
-  messagingSenderId: "187774286181",
-  appId: "1:187774286181:web:95fc9391a64d3d244e498c"
+    apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
+    authDomain: "michatprivado-f704a.firebaseapp.com",
+    databaseURL: "https://michatprivado-f704a-default-rtdb.firebaseio.com",
+    projectId: "michatprivado-f704a",
+    storageBucket: "michatprivado-f704a.appspot.com",
+    messagingSenderId: "187774286181",
+    appId: "1:187774286181:web:95fc9391a64d3d244e498c"
 };
 
 // Inicializar Firebase
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
 const db = getDatabase(app);
-const storage = getStorage(app);
+const auth = getAuth(app);
 
-// Mostrar el nickname del usuario en el chat
+// Verificar usuario autenticado
 onAuthStateChanged(auth, (user) => {
-  const nicknameElement = document.getElementById("nickname");
-  if (user) {
-    console.log("✅ Usuario autenticado:", user);
-    nicknameElement.textContent = user.displayName || "Usuario sin nombre";
-  } else {
-    console.log("🚨 No hay usuario autenticado.");
-    nicknameElement.textContent = "Invitado";
-  }
-});
-
-// Enviar mensajes con texto e imágenes
-document.getElementById("sendMessage").addEventListener("click", () => {
-  const messageInput = document.getElementById("messageInput").value;
-  const fileInput = document.getElementById("fileInput").files[0];
-  const user = auth.currentUser;
-
-  if (user) {
-    if (fileInput) {
-      // Subir archivo a Firebase Storage
-      const fileRef = storageRef(storage, `uploads/${user.uid}/${fileInput.name}`);
-      uploadBytes(fileRef, fileInput).then((snapshot) => {
-        getDownloadURL(snapshot.ref).then((fileURL) => {
-          sendMessage(user, fileURL, fileInput.name);
-        });
-      });
-    } else if (messageInput.trim() !== "") {
-      sendMessage(user, messageInput);
-    }
-  }
-});
-
-// Función para enviar mensajes
-function sendMessage(user, content, fileName = null) {
-  const chatRef = ref(db, "chatMessages");
-  const newMessageRef = push(chatRef);
-
-  set(newMessageRef, {
-    sender: user.displayName || "Usuario",
-    text: fileName ? null : content,
-    fileURL: fileName ? content : null,
-    fileName: fileName,
-    timestamp: Date.now()
-  });
-
-  document.getElementById("messageInput").value = "";
-  document.getElementById("fileInput").value = "";
-}
-
-// Mostrar mensajes en tiempo real
-const chatMessagesRef = ref(db, "chatMessages");
-onValue(chatMessagesRef, (snapshot) => {
-  const chatBox = document.getElementById("chatBox");
-  chatBox.innerHTML = "";
-
-  snapshot.forEach((childSnapshot) => {
-    const messageData = childSnapshot.val();
-    const messageElement = document.createElement("p");
-
-    if (messageData.fileURL) {
-      messageElement.innerHTML = `<strong>${messageData.sender}:</strong> <a href="${messageData.fileURL}" target="_blank">${messageData.fileName}</a>`;
+    if (user) {
+        document.getElementById("nickname").innerText = user.email;
     } else {
-      messageElement.textContent = `${messageData.sender}: ${messageData.text}`;
+        window.location.href = "index.html"; // Redirigir si no está autenticado
     }
+});
 
-    chatBox.appendChild(messageElement);
-  });
+// Referencia al chat en Firebase
+const chatRef = ref(db, "chat");
+
+// Enviar mensaje
+document.getElementById("sendMessage").addEventListener("click", () => {
+    const message = document.getElementById("messageInput").value;
+    if (message.trim() !== "") {
+        push(chatRef, {
+            user: auth.currentUser.email,
+            message: message,
+            timestamp: Date.now()
+        });
+        document.getElementById("messageInput").value = "";
+    }
+});
+
+// Mostrar mensajes en el chat
+onChildAdded(chatRef, (snapshot) => {
+    const data = snapshot.val();
+    const messageElement = document.createElement("p");
+    messageElement.innerHTML = `<strong>${data.user}:</strong> ${data.message}`;
+    document.getElementById("chatBox").appendChild(messageElement);
+});
+
+// Cerrar sesión
+document.getElementById("logoutButton").addEventListener("click", () => {
+    signOut(auth).then(() => {
+        window.location.href = "index.html";
+    });
 });
