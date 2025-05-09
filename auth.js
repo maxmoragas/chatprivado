@@ -16,20 +16,25 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
-// Manejo de autenticación y redirección
+// Función para iniciar sesión con Google
 function loginUser() {
   signInWithPopup(auth, provider)
     .then((result) => {
       console.log("✅ Usuario autenticado:", result.user);
-      window.location.href = "chat.html"; // Redirigir después de iniciar sesión
+      window.location.href = "chat.html"; // Redirigir al chat después de iniciar sesión
     })
     .catch((error) => {
-      console.error("🚨 Error al iniciar sesión:", error);
+      console.error("🚨 Error al iniciar sesión:", error.message);
     });
 }
 
-document.getElementById("loginButton").addEventListener("click", loginUser);
+// Verifica que el botón existe antes de asignarle el evento
+const loginButton = document.getElementById("loginButton");
+if (loginButton) {
+  loginButton.addEventListener("click", loginUser);
+}
 
+// Función para cerrar sesión
 function logoutUser() {
   signOut(auth)
     .then(() => {
@@ -37,18 +42,20 @@ function logoutUser() {
       window.location.href = "index.html"; // Redirigir al inicio
     })
     .catch((error) => {
-      console.error("🚨 Error al cerrar sesión:", error);
+      console.error("🚨 Error al cerrar sesión:", error.message);
     });
 }
 
-document.getElementById("logoutButton").addEventListener("click", logoutUser);
+// Verifica que el botón existe antes de asignarle el evento
+const logoutButton = document.getElementById("logoutButton");
+if (logoutButton) {
+  logoutButton.addEventListener("click", logoutUser);
+}
 
-// Verificación de autenticación
+// Verificación de autenticación en tiempo real
 onAuthStateChanged(auth, (user) => {
   const nicknameElement = document.getElementById("nickname");
-  if (user) {
-    nicknameElement.textContent = user.displayName || "Usuario sin nombre";
-  } else {
-    nicknameElement.textContent = "Invitado";
+  if (nicknameElement) {
+    nicknameElement.textContent = user ? user.displayName || "Usuario sin nombre" : "Invitado";
   }
 });
