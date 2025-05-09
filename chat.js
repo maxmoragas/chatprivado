@@ -1,14 +1,14 @@
-window.addEventListener("firebase-ready", () => {
-    console.log("🔍 Firebase recibido en chat.js:", window.firebaseInstance);
+window.onload = function() {
+    console.log("🔍 Probando acceso a Firebase desde chat.js:", window.firebaseInstance);
 
-    if (typeof window.firebaseInstance === "undefined") {
+    if (!window.firebaseInstance) {
         console.error("🚨 Firebase sigue sin estar disponible en chat.js. Deteniendo ejecución.");
         return;
     }
 
     console.log("✅ Firebase ya está disponible en chat.js:", window.firebaseInstance);
     iniciarFirebase();
-});
+};
 
 function iniciarFirebase() {
     console.log("✅ Usando la instancia de Firebase creada en index.html.");
