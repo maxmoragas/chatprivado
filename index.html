@@ -61,8 +61,27 @@
             background-color: rgb(0, 80, 180);
         }
     </style>
-    
-    <!-- Carga Firebase desde la CDN -->
+</head>
+<body>
+    <h1>LLA BRAGADO</h1>
+
+    <img src="leon.png" alt="León">
+
+    <div class="form-container">
+        <label for="nickname">Nickname:</label>
+        <input type="text" id="nickname" name="nickname">
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
+
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password">
+
+        <button id="registerButton">Registro</button>
+        <button id="loginButton">Login</button>
+    </div>
+
+    <!-- Carga Firebase al final del <body> -->
     <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database-compat.js"></script>
@@ -85,24 +104,5 @@
         });
     </script>
     <script defer src="auth.js"></script>
-</head>
-<body>
-    <h1>LLA BRAGADO</h1>
-
-    <img src="leon.png" alt="León">
-
-    <div class="form-container">
-        <label for="nickname">Nickname:</label>
-        <input type="text" id="nickname" name="nickname">
-
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email">
-
-        <label for="password">Contraseña:</label>
-        <input type="password" id="password" name="password">
-
-        <button id="registerButton">Registro</button>
-        <button id="loginButton">Login</button>
-    </div>
 </body>
 </html>
