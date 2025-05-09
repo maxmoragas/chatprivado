@@ -102,19 +102,10 @@
             firebase.initializeApp(firebaseConfig);
             console.log("🚀 Firebase cargado en index.html:", firebase);
 
-            function esperarFirebase() {
-                if (typeof firebase === "undefined") {
-                    console.warn("⏳ Esperando que Firebase se cargue correctamente...");
-                    setTimeout(esperarFirebase, 1000);
-                    return;
-                }
+            window.firebase = firebase;
+            console.log("✅ Firebase asignado correctamente a window.firebase");
 
-                window.firebase = firebase;
-                console.log("✅ Firebase asignado correctamente a window.firebase");
-                window.dispatchEvent(new Event("firebase-load-complete"));
-            }
-
-            esperarFirebase();
+            window.dispatchEvent(new Event("firebase-load-complete"));
         });
     </script>
 
