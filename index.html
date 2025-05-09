@@ -5,17 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LLA Bragado</title>
 
-    <!-- 🔥 Cargar Firebase correctamente -->
+    <!-- 🔥 Cargar Firebase correctamente SIN errores de módulo -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js"></script>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             if (typeof firebase === "undefined") {
-                console.error("Firebase no ha sido cargado correctamente.");
+                console.error("🚨 Firebase NO se ha cargado correctamente.");
                 return;
             }
             
+            console.log("✅ Firebase cargado correctamente.");
+
             const firebaseConfig = {
                 apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
                 authDomain: "michatprivado-f704a.firebaseapp.com",
