@@ -1,10 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
     if (!window.db) {
-        console.error("Firebase no ha sido inicializado correctamente.");
+        console.error("🚨 Firebase NO está inicializado correctamente.");
         return;
     }
-    
+
+    console.log("✅ Firebase inicializado y listo para usar.");
     const db = window.db;
+
+    document.getElementById("setNickname").addEventListener("click", () => {
+        const nickname = document.getElementById("nicknameInput").value;
+        if (nickname.trim() !== "") {
+            localStorage.setItem("nickname", nickname);
+        }
+    });
 
     document.getElementById("sendMessage").addEventListener("click", () => {
         const messageText = document.getElementById("messageInput").value;
