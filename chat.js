@@ -1,100 +1,62 @@
-document.addEventListener("DOMContentLoaded", () => {
-    if (!window.auth || !window.db || !window.storage) {
-        console.error("🚨 Firebase NO se ha cargado correctamente.");
-        return;
-    }
+import { initializeApp } from "firebase/app";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getDatabase, ref, onValue, push, set } from "firebase/database";
 
-    console.log("✅ Firebase está listo para el chat.");
+// Configuración de Firebase con tus datos
+const firebaseConfig = {
+  apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
+  authDomain: "michatprivado-f704a.firebaseapp.com",
+  projectId: "michatprivado-f704a",
+  storageBucket: "michatprivado-f704a.appspot.com",
+  messagingSenderId: "187774286181",
+  appId: "1:187774286181:web:95fc9391a64d3d244e498c"
+};
 
-    const messageInput = document.getElementById("messageInput");
-    const sendMessageButton = document.getElementById("sendMessage");
-    const messagesContainer = document.getElementById("messages");
-    const imageInput = document.getElementById("imageInput");
-    const uploadImageButton = document.getElementById("uploadImage");
-    const showOnlineUsersButton = document.getElementById("showOnlineUsers");
-    const onlineUsersContainer = document.getElementById("onlineUsers");
+// Inicializar Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getDatabase(app);
 
-    // 💡 Obtener el nickname desde Firebase y guardarlo en `localStorage`
-    firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-            firebase.database().ref("users/" + user.uid).once("value").then((snapshot) => {
-                const nickname = snapshot.val().nickname || "Invitado";
-                localStorage.setItem("nickname", nickname);
-                console.log("✅ Nickname registrado:", nickname);
-            });
-        }
+// Verificar autenticación y obtener nickname
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    console.log("✅ Usuario autenticado:", user);
+    document.getElementById("nickname").textContent = user.displayName || "Usuario sin nombre";
+  } else {
+    console.log("🚨 No hay usuario autenticado.");
+    document.getElementById("nickname").textContent = "Invitado";
+  }
+});
+
+// Enviar mensajes al chat
+document.getElementById("sendMessage").addEventListener("click", () => {
+  const messageInput = document.getElementById("messageInput").value;
+  const user = auth.currentUser;
+
+  if (user && messageInput.trim() !== "") {
+    const chatRef = ref(db, "chatMessages");
+    const newMessageRef = push(chatRef);
+
+    set(newMessageRef, {
+      text: messageInput,
+      sender: user.displayName || "Usuario",
+      timestamp: Date.now()
     });
 
-    sendMessageButton.addEventListener("click", () => {
-        const message = messageInput.value.trim();
-        if (!message) return;
+    document.getElementById("messageInput").value = "";
+  }
+});
 
-        const nickname = localStorage.getItem("nickname") || "Invitado";
+// Mostrar mensajes en tiempo real
+const chatMessagesRef = ref(db, "chatMessages");
+onValue(chatMessagesRef, (snapshot) => {
+  const chatBox = document.getElementById("chatBox");
+  chatBox.innerHTML = "";
 
-        firebase.database().ref("messages").push({
-            sender: nickname,
-            text: message,
-            timestamp: Date.now()
-        });
-
-        messageInput.value = "";
-        adjustHeight(messageInput);
-    });
-
-    firebase.database().ref("messages").on("child_added", (snapshot) => {
-        const data = snapshot.val();
-        const messageElement = document.createElement("div");
-        messageElement.classList.add("message");
-
-        if (data.sender === localStorage.getItem("nickname")) {
-            messageElement.classList.add("sent");
-        } else {
-            messageElement.classList.add("received");
-        }
-
-        messageElement.textContent = `[${data.sender}]: ${data.text}`;
-        messagesContainer.appendChild(messageElement);
-    });
-
-    uploadImageButton.addEventListener("click", () => {
-        const file = imageInput.files[0];
-        if (!file) return;
-
-        const storageRef = firebase.storage().ref("images/" + file.name);
-        storageRef.put(file).then(() => {
-            storageRef.getDownloadURL().then((url) => {
-                firebase.database().ref("messages").push({
-                    sender: localStorage.getItem("nickname"),
-                    imageUrl: url,
-                    timestamp: Date.now()
-                });
-            });
-        });
-    });
-
-    showOnlineUsersButton.addEventListener("click", () => {
-        onlineUsersContainer.style.display = "block";
-        onlineUsersContainer.innerHTML = "";
-
-        firebase.database().ref("users").once("value", (snapshot) => {
-            snapshot.forEach((childSnapshot) => {
-                if (childSnapshot.val().online) {
-                    const userElement = document.createElement("p");
-                    userElement.textContent = childSnapshot.val().nickname;
-                    onlineUsersContainer.appendChild(userElement);
-                }
-            });
-        });
-    });
-
-    firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-            firebase.database().ref("users/" + user.uid).update({ online: true });
-        }
-    });
-
-    window.adjustHeight = function(element) {
-        element.style.height = "auto";
-        element.style.height = element.scrollHeight + "px";
-    };
+  snapshot.forEach((childSnapshot) => {
+    const messageData = childSnapshot.val();
+    const messageElement = document.createElement("p");
+    messageElement.textContent = `${messageData.sender}: ${messageData.text}`;
+    chatBox.appendChild(messageElement);
+  });
 });
