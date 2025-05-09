@@ -3,87 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LLA BRAGADO</title>
-
-    <!-- 🔥 Cargar Firebase con la versión antigua v8 -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            try {
-                const firebaseConfig = {
-                    apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
-                    authDomain: "michatprivado-f704a.firebaseapp.com",
-                    databaseURL: "https://michatprivado-f704a-default-rtdb.firebaseio.com",
-                    projectId: "michatprivado-f704a",
-                    storageBucket: "michatprivado-f704a.appspot.com",
-                    messagingSenderId: "187774286181",
-                    appId: "1:187774286181:web:95fc9391a64d3d244e498c"
-                };
-
-                firebase.initializeApp(firebaseConfig);
-                window.auth = firebase.auth();
-                window.db = firebase.database();
-
-                console.log("✅ Firebase cargado correctamente.");
-            } catch (error) {
-                console.error("🚨 Error al cargar Firebase:", error);
-            }
-        });
-    </script>
-    <script src="chat.js"></script>
-    <script src="auth.js"></script>
-
-    <style>
-        body { 
-            font-family: Arial, sans-serif; 
-            text-align: center; 
-            background-color: rgb(138,43,226); 
-            color: white;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        h2 { font-size: 36px; font-weight: bold; color: white; text-transform: uppercase; }
-
-        #loginContainer { 
-            max-width: 400px; 
-            width: 90%;
-            padding: 20px; 
-            border-radius: 5px; 
-            background-color: rgb(138,43,226);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-        }
-
-        label { display: block; text-align: left; width: 100%; font-weight: bold; color: white; }
-        input { width: 100%; padding: 8px; font-size: 16px; margin-top: 5px; background-color: transparent; color: white; border: 1px solid white; }
-
-        button { width: 100%; padding: 8px; font-size: 16px; margin-top: 5px; background-color: #d3d3d3; color: black; font-weight: bold; border: none; cursor: pointer; }
-        button:hover { background-color: #bdbdbd; }
-
-        img { max-width: 200px; }
-    </style>
+    <title>LLA Bragado</title>
 </head>
 <body>
-    <h2>LLA BRAGADO</h2>
-    <img src="leon.png" alt="León">
-    <div id="loginContainer">
-        <h3>Iniciar sesión / Registrarse</h3>
-        <label for="nickname">Nickname:</label>
-        <input type="text" id="nickname" placeholder="Tu apodo">
-        <label for="email">Correo:</label>
-        <input type="email" id="email" placeholder="Correo">
-        <label for="password">Contraseña:</label>
-        <input type="password" id="password" placeholder="Contraseña">
-        <button onclick="registerUser()">Registrarse</button>
-        <button onclick="loginUser()">Iniciar Sesión</button>
-    </div>
+    <h1>Bienvenido a LLA Bragado</h1>
+
+    <img src="leon.png" alt="León" width="200">
+
+    <p>Usuario: <span id="nickname">Invitado</span></p>
+
+    <button id="loginButton">Iniciar sesión con Google</button>
+    <button id="logoutButton">Cerrar sesión</button>
+
+    <a href="chat.html">Ir al chat</a>
+
+    <!-- Configuración de Firebase -->
+    <script type="module">
+        import { initializeApp } from "firebase/app";
+        import { getAuth } from "firebase/auth";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
+            authDomain: "michatprivado-f704a.firebaseapp.com",
+            projectId: "michatprivado-f704a",
+            storageBucket: "michatprivado-f704a.appspot.com",
+            messagingSenderId: "187774286181",
+            appId: "1:187774286181:web:95fc9391a64d3d244e498c"
+        };
+
+        // Inicializar Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+    </script>
+
+    <script type="module" src="auth.js"></script>
 </body>
 </html>
