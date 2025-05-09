@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     console.log("🛠 Verificando si Firebase está definido:", typeof firebase); // 🔍 Comprobando si Firebase está cargado antes de usarlo
+    console.log("🔍 Probando acceso a Firebase:", window.firebase); // 🔍 Probando si Firebase está disponible en `window`
 
     if (typeof firebase === "undefined") {
         console.error("🚨 Firebase no está disponible.");
