@@ -101,14 +101,14 @@
 
             firebase.initializeApp(firebaseConfig);
             
-            console.log("🚀 Confirmando carga de Firebase en index.html:", window.firebase);
+            console.log("🚀 Confirmando carga de Firebase en index.html:", firebase);
             console.log("✅ Firebase Auth:", typeof firebase.auth);
             
             // 📌 Compartir Firebase globalmente
-            window.firebaseInstance = firebase;
-            window.dispatchEvent(new Event("firebase-ready"));
+            window.firebase = firebase;
+            console.log("✅ Firebase asignado correctamente a window.firebase");
 
-            console.log("✅ Firebase está listo, notificando a `chat.js`...");
+            window.dispatchEvent(new Event("firebase-ready"));
         });
     </script>
 
