@@ -3,16 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MiChatPrivado</title>
+    <title>LLA Bragado</title>
 
     <!-- 🔥 Cargar Firebase correctamente -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js"></script>
     <script src="firebaseConfig.js"></script> <!-- Aquí se carga `firebaseConfig.js` -->
+    
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background-color: rgb(138,43,226); }
+        h2 { color: white; }
+        #chatContainer { max-width: 400px; margin: auto; padding: 10px; border: 1px solid #ddd; background-color: white; }
+        img { max-width: 200px; }
+    </style>
 </head>
 <body>
-    <h2>MiChatPrivado</h2>
+    <h2>LLA Bragado</h2> <!-- 🔥 Texto corregido -->
 
     <!-- Registro -->
     <input type="email" id="registerEmail" placeholder="Correo">
@@ -31,6 +38,6 @@
     <input type="text" id="messageInput" placeholder="Escribe un mensaje">
     <button id="sendMessage">Enviar</button>
 
-    <script src="chat.js"></script> <!-- Cargar chat.js -->
+    <script src="chat.js"></script>
 </body>
 </html>
