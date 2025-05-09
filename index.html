@@ -5,23 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Chat Privado</title>
 
-    <!-- 🔥 Cargar Firebase correctamente -->
+    <!-- 🔥 Cargar Firebase -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js"></script>
     
     <script>
-        // 🔥 Inicialización de Firebase con tu configuración
+        // 🔥 Inicialización de Firebase con tus datos
         const firebaseConfig = {
-            apiKey: "TU_API_KEY",
-            authDomain: "TU_AUTH_DOMAIN",
-            databaseURL: "TU_DATABASE_URL",
-            projectId: "TU_PROJECT_ID",
-            storageBucket: "TU_STORAGE_BUCKET",
-            messagingSenderId: "TU_MESSAGING_SENDER_ID",
-            appId: "TU_APP_ID"
+            apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
+            authDomain: "michatprivado-f704a.firebaseapp.com",
+            databaseURL: "https://michatprivado-f704a.firebaseio.com",
+            projectId: "michatprivado-f704a",
+            storageBucket: "michatprivado-f704a.appspot.com",
+            messagingSenderId: "187774286181",
+            appId: "1:187774286181:web:95fc9391a64d3d244e498c"
         };
 
-        // 🔥 Conectar Firebase y base de datos
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
     </script>
@@ -49,7 +48,6 @@
     <!-- Input para imágenes -->
     <input type="file" id="imageInput" accept="image/*">
 
-    <!-- 🔥 Cargar `chat.js` correctamente -->
     <script src="chat.js"></script>
 </body>
 </html>
