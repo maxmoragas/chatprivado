@@ -6,7 +6,7 @@
     <title>LLA BRAGADO</title>
     <style>
         body {
-            background-color: rgb(50, 50, 50);
+            background-color: rgb(138, 43, 226); /* Violeta específico que me diste */
             color: white;
             font-family: Arial, sans-serif;
             text-align: center;
@@ -93,32 +93,6 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-
-        document.getElementById("registerButton").addEventListener("click", () => {
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
-
-            createUserWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    console.log("✅ Usuario registrado:", userCredential.user);
-                })
-                .catch((error) => {
-                    console.error("🚨 Error en el registro:", error.message);
-                });
-        });
-
-        document.getElementById("loginButton").addEventListener("click", () => {
-            const email = document.getElementByElementById("email").value;
-            const password = document.getElementByElementById("password").value;
-
-            signInWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    console.log("✅ Sesión iniciada:", userCredential.user);
-                })
-                .catch((error) => {
-                    console.error("🚨 Error en el login:", error.message);
-                });
-        });
     </script>
 </body>
 </html>
