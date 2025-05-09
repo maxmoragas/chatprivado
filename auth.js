@@ -8,7 +8,6 @@ const firebaseConfig = {
     appId: "1:187774286181:web:95fc9391a64d3d244e498c"
 };
 
-// Inicializar Firebase sin `import`
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
