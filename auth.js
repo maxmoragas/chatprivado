@@ -1,3 +1,7 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+
+// Configurar Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
     authDomain: "michatprivado-f704a.firebaseapp.com",
@@ -8,22 +12,22 @@ const firebaseConfig = {
 };
 
 // Inicializar Firebase
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
-// Registro de usuarios
+// Registro de usuario
 document.getElementById("registerButton").addEventListener("click", () => {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
-    auth.createUserWithEmailAndPassword(email, password)
+    createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-            console.log("✅ Usuario registrado con éxito:", userCredential.user);
-            alert("Registro exitoso");
+            console.log("✅ Registro exitoso:", userCredential.user);
+            alert("Registro completado");
         })
         .catch((error) => {
             console.error("🚨 Error en el registro:", error.message);
-            alert("Error en el registro: " + error.message);
+            alert("Error: " + error.message);
         });
 });
 
@@ -32,13 +36,13 @@ document.getElementById("loginButton").addEventListener("click", () => {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
-    auth.signInWithEmailAndPassword(email, password)
+    signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-            console.log("✅ Sesión iniciada correctamente:", userCredential.user);
-            alert("Login exitoso");
+            console.log("✅ Inicio de sesión exitoso:", userCredential.user);
+            alert("Bienvenido");
         })
         .catch((error) => {
             console.error("🚨 Error en el login:", error.message);
-            alert("Error en el login: " + error.message);
+            alert("Error: " + error.message);
         });
 });
