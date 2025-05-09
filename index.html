@@ -5,20 +5,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LLA Bragado</title>
     <script type="module" src="auth.js"></script>
+    <style>
+        body {
+            background-color: rgb(30, 30, 30);
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        h1 {
+            background-color: rgb(0, 100, 200);
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .chat-container {
+            width: 80%;
+            margin: auto;
+            background-color: #222;
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message {
+            background-color: #0084ff;
+            color: white;
+            padding: 10px;
+            border-radius: 15px;
+            max-width: 60%;
+            margin: 10px auto;
+            text-align: left;
+        }
+
+        .user-message {
+            background-color: #34c759;
+            align-self: flex-end;
+        }
+
+        button {
+            background-color: rgb(0, 100, 200);
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        button:hover {
+            background-color: rgb(0, 80, 180);
+        }
+    </style>
 </head>
 <body>
-    <h1>Bienvenido a LLA Bragado</h1>
+    <h1>LLA Bragado</h1>
 
     <img src="leon.png" alt="León" width="200">
 
-    <p>Usuario: <span id="nickname">Invitado</span></p>
+    <div class="chat-container">
+        <p>Usuario: <span id="nickname">Invitado</span></p>
 
-    <button id="loginButton">Iniciar sesión con Google</button>
-    <button id="logoutButton">Cerrar sesión</button>
+        <div class="message">¡Hola! Bienvenido al chat.</div>
+        <div class="message user-message">Gracias, ¿cómo estás?</div>
 
-    <a href="chat.html">Ir al chat</a>
+        <button id="loginButton">Iniciar sesión con Google</button>
+        <button id="logoutButton">Cerrar sesión</button>
 
-    <!-- Configuración de Firebase -->
+        <a href="chat.html">Ir al chat</a>
+    </div>
+
     <script type="module">
         import { initializeApp } from "firebase/app";
         import { getAuth } from "firebase/auth";
@@ -32,9 +89,9 @@
             appId: "1:187774286181:web:95fc9391a64d3d244e498c"
         };
 
-        // Inicializar Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
     </script>
+
 </body>
 </html>
