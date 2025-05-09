@@ -1,15 +1,8 @@
 console.log("🔍 chat.js se está ejecutando...");
-console.log("🔍 Verificando Firebase en chat.js:", typeof window.firebase);
+console.log("🔍 Verificando acceso a Firebase desde chat.js:", window.firebase);
 
-function esperarFirebase() {
-    if (typeof window.firebase === "undefined") {
-        console.warn("⏳ Firebase aún no está listo en chat.js, esperando...");
-        setTimeout(esperarFirebase, 1000);
-        return;
-    }
-
-    console.log("✅ Firebase ya está disponible en chat.js:", window.firebase);
-    iniciarFirebase();
+if (window.firebase) {
+    console.log("✅ Firebase disponible en chat.js:", window.firebase);
+} else {
+    console.error("🚨 Firebase sigue sin estar accesible en chat.js. Algo está bloqueándolo.");
 }
-
-window.addEventListener("firebase-load-complete", esperarFirebase);
