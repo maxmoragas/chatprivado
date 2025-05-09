@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LLA Bragado</title>
-    <script type="module" src="auth.js"></script>
+    <title>LLA BRAGADO</title>
     <style>
         body {
             background-color: rgb(30, 30, 30);
@@ -14,34 +13,33 @@
         }
 
         h1 {
-            background-color: rgb(0, 100, 200);
-            padding: 10px;
-            border-radius: 8px;
+            color: white;
+            font-size: 32px;
         }
 
-        .chat-container {
-            width: 80%;
-            margin: auto;
-            background-color: #222;
-            padding: 20px;
-            border-radius: 10px;
+        img {
+            width: 200px;
+            margin-top: 20px;
+        }
+
+        .form-container {
+            margin-top: 20px;
             display: flex;
             flex-direction: column;
+            align-items: center;
         }
 
-        .message {
-            background-color: #0084ff;
-            color: white;
+        label {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        input {
             padding: 10px;
-            border-radius: 15px;
-            max-width: 60%;
-            margin: 10px auto;
-            text-align: left;
-        }
-
-        .user-message {
-            background-color: #34c759;
-            align-self: flex-end;
+            margin-top: 5px;
+            width: 200px;
+            border-radius: 5px;
+            border: none;
         }
 
         button {
@@ -60,25 +58,27 @@
     </style>
 </head>
 <body>
-    <h1>LLA Bragado</h1>
+    <h1>LLA BRAGADO</h1>
 
-    <img src="leon.png" alt="León" width="200">
+    <img src="leon.png" alt="León">
 
-    <div class="chat-container">
-        <p>Usuario: <span id="nickname">Invitado</span></p>
+    <div class="form-container">
+        <label for="nickname">Nickname:</label>
+        <input type="text" id="nickname" name="nickname">
 
-        <div class="message">¡Hola! Bienvenido al chat.</div>
-        <div class="message user-message">Gracias, ¿cómo estás?</div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
 
-        <button id="loginButton">Iniciar sesión con Google</button>
-        <button id="logoutButton">Cerrar sesión</button>
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password">
 
-        <a href="chat.html">Ir al chat</a>
+        <button id="registerButton">Registro</button>
+        <button id="loginButton">Login</button>
     </div>
 
     <script type="module">
         import { initializeApp } from "firebase/app";
-        import { getAuth } from "firebase/auth";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
@@ -91,7 +91,32 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-    </script>
 
+        document.getElementById("registerButton").addEventListener("click", () => {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    console.log("✅ Usuario registrado:", userCredential.user);
+                })
+                .catch((error) => {
+                    console.error("🚨 Error en el registro:", error.message);
+                });
+        });
+
+        document.getElementById("loginButton").addEventListener("click", () => {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    console.log("✅ Sesión iniciada:", userCredential.user);
+                })
+                .catch((error) => {
+                    console.error("🚨 Error en el login:", error.message);
+                });
+        });
+    </script>
 </body>
 </html>
