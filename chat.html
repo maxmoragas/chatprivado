@@ -5,36 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat - LLA BRAGADO</title>
 
-    <!-- 🔥 Firebase v8 para compatibilidad completa -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            try {
-                const firebaseConfig = {
-                    apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
-                    authDomain: "michatprivado-f704a.firebaseapp.com",
-                    databaseURL: "https://michatprivado-f704a-default-rtdb.firebaseio.com",
-                    projectId: "michatprivado-f704a",
-                    storageBucket: "michatprivado-f704a.appspot.com",
-                    messagingSenderId: "187774286181",
-                    appId: "1:187774286181:web:95fc9391a64d3d244e498c"
-                };
-
-                firebase.initializeApp(firebaseConfig);
-                window.auth = firebase.auth();
-                window.db = firebase.database();
-                window.storage = firebase.storage();
-
-                console.log("✅ Firebase cargado correctamente.");
-            } catch (error) {
-                console.error("🚨 Error al cargar Firebase:", error);
-            }
-        });
-    </script>
+    <script src="firebaseConfig.js"></script>
     <script src="chat.js"></script>
 
     <style>
