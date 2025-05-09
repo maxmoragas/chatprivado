@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "firebase/auth";
 
-// Configuración de Firebase
+// Configuración de Firebase con tus datos
 const firebaseConfig = {
   apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
   authDomain: "michatprivado-f704a.firebaseapp.com",
