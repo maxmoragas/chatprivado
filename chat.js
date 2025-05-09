@@ -1,3 +1,5 @@
+console.log("🔍 chat.js se está ejecutando...");
+
 window.onload = function() {
     console.log("🔍 Probando acceso a Firebase desde chat.js:", window.firebaseInstance);
 
