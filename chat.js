@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getDatabase, ref, onValue, push, set } from "firebase/database";
 
-// Configuración de Firebase con tus datos
+// Configuración de Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
   authDomain: "michatprivado-f704a.firebaseapp.com",
@@ -17,7 +17,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase(app);
 
-// Verificar autenticación y obtener nickname
+// Mostrar nickname al entrar en el chat
 onAuthStateChanged(auth, (user) => {
   if (user) {
     console.log("✅ Usuario autenticado:", user);
