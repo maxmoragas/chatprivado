@@ -9,35 +9,27 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js"></script>
-    <script src="firebaseConfig.js"></script> <!-- Aquí se carga `firebaseConfig.js` -->
-    
+    <script src="firebaseConfig.js"></script>
+
     <style>
         body { font-family: Arial, sans-serif; text-align: center; background-color: rgb(138,43,226); }
         h2 { color: white; }
-        #chatContainer { max-width: 400px; margin: auto; padding: 10px; border: 1px solid #ddd; background-color: white; }
+        #loginContainer { max-width: 400px; margin: auto; padding: 20px; border-radius: 5px; background: white; }
         img { max-width: 200px; }
     </style>
 </head>
 <body>
     <h2>LLA Bragado</h2>
+    <img src="leon.png" alt="León"> <!-- 🔥 Imagen del león -->
 
-    <!-- Registro -->
-    <input type="email" id="registerEmail" placeholder="Correo">
-    <input type="password" id="registerPassword" placeholder="Contraseña">
-    <button onclick="registerUser()">Registrarse</button>
+    <div id="loginContainer">
+        <h3>Iniciar sesión / Registrarse</h3>
+        <input type="email" id="email" placeholder="Correo">
+        <input type="password" id="password" placeholder="Contraseña">
+        <button onclick="registerUser()">Registrarse</button>
+        <button onclick="loginUser()">Iniciar Sesión</button>
+    </div>
 
-    <!-- Login -->
-    <input type="email" id="loginEmail" placeholder="Correo">
-    <input type="password" id="loginPassword" placeholder="Contraseña">
-    <button onclick="loginUser()">Iniciar Sesión</button>
-
-    <!-- Chat Messages -->
-    <div id="chatContainer"></div>
-
-    <!-- Input para mensajes de texto -->
-    <input type="text" id="messageInput" placeholder="Escribe un mensaje">
-    <button id="sendMessage">Enviar</button>
-
-    <script src="chat.js"></script>
+    <script src="auth.js"></script> <!-- 🔥 Manejo de login/registro -->
 </body>
 </html>
