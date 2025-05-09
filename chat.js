@@ -1,21 +1,21 @@
 window.onload = function() {
-    console.log("🔍 Probando acceso a Firebase desde chat.js:", firebase);
+    console.log("🔍 Probando acceso a Firebase desde chat.js:", window.firebaseInstance);
 
-    if (typeof firebase === "undefined") {
+    if (typeof window.firebaseInstance === "undefined") {
         console.error("🚨 Firebase sigue sin estar disponible en chat.js. Deteniendo ejecución.");
         return;
     }
 
-    console.log("✅ Firebase ya está disponible en chat.js:", firebase);
+    console.log("✅ Firebase ya está disponible en chat.js:", window.firebaseInstance);
     iniciarFirebase();
 };
 
 function iniciarFirebase() {
     console.log("✅ Usando la instancia de Firebase creada en index.html.");
 
-    const db = firebase.database();
-    const auth = firebase.auth();
-    const storage = firebase.storage();
+    const db = window.firebaseInstance.database();
+    const auth = window.firebaseInstance.auth();
+    const storage = window.firebaseInstance.storage();
 
     auth.onAuthStateChanged((user) => {
         if (!user) window.location.href = "index.html";
