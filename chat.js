@@ -1,18 +1,13 @@
 window.onload = function() {
     console.log("🔍 Probando acceso a Firebase desde chat.js:", window.firebase);
 
-    function verificarFirebase() {
-        if (typeof firebase === "undefined") {
-            console.error("🚨 Firebase sigue sin estar disponible en chat.js. Reintentando en 2 segundos...");
-            setTimeout(verificarFirebase, 2000);
-            return;
-        }
-
-        console.log("✅ Firebase ya está disponible en chat.js:", firebase);
-        iniciarFirebase();
+    if (!window.firebase) {
+        console.error("🚨 Firebase sigue sin estar disponible en chat.js. Deteniendo ejecución.");
+        return;
     }
 
-    verificarFirebase();
+    console.log("✅ Firebase ya está disponible en chat.js:", firebase);
+    iniciarFirebase();
 };
 
 function iniciarFirebase() {
