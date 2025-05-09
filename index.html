@@ -104,15 +104,22 @@
             console.log("🚀 Confirmando carga de Firebase en index.html:", window.firebase);
             console.log("✅ Firebase Auth:", typeof firebase.auth);
             
-            // 📌 Compartir Firebase con chat.js
             window.firebaseInstance = firebase;
 
-            // ✅ Cargar chat.js después de 1 segundo para evitar conflictos en la ejecución
-            setTimeout(() => {
+            // ⏳ Esperar hasta que Firebase esté completamente listo antes de cargar chat.js
+            function verificarFirebase() {
+                if (typeof window.firebaseInstance === "undefined") {
+                    console.warn("⏳ Esperando a que Firebase se cargue correctamente...");
+                    setTimeout(verificarFirebase, 1000);
+                    return;
+                }
+                console.log("✅ Firebase está listo, cargando chat.js...");
                 const scriptChat = document.createElement("script");
                 scriptChat.src = "chat.js";
                 document.body.appendChild(scriptChat);
-            }, 1000);
+            }
+
+            verificarFirebase();
         });
     </script>
 </body>
