@@ -62,11 +62,11 @@
         }
     </style>
     
-    <!-- Carga Firebase con versiones estándar en lugar de compat -->
-    <script defer src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
-    <script defer src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js"></script>
-    <script defer src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js"></script>
-    <script defer src="https://www.gstatic.com/firebasejs/10.7.0/firebase-storage.js"></script>
+    <!-- Carga Firebase con compatibilidad como estaba antes -->
+    <script defer src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database-compat.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/10.7.0/firebase-storage-compat.js"></script>
     <script defer src="auth.js"></script>
 </head>
 <body>
@@ -90,13 +90,6 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            if (typeof firebase === "undefined") {
-                console.error("🚨 Firebase NO se está cargando en index.html");
-                return;
-            }
-
-            console.log("✅ Firebase cargado en index.html:", firebase);
-
             const firebaseConfig = {
                 apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
                 authDomain: "michatprivado-f704a.firebaseapp.com",
@@ -107,6 +100,9 @@
             };
 
             firebase.initializeApp(firebaseConfig);
+            
+            // 🔍 Confirmar si Firebase está cargando correctamente en index.html
+            console.log("🚀 Confirmando carga de Firebase en index.html:", window.firebase);
         });
     </script>
 </body>
