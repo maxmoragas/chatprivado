@@ -1,13 +1,20 @@
 window.onload = function() {
-    console.log("🛠 Verificando si Firebase está definido:", typeof firebase);
-    console.log("🔍 Probando acceso a Firebase:", window.firebase);
-
-    if (typeof firebase === "undefined") {
-        console.error("🚨 Firebase sigue sin estar disponible.");
+    if (!window.firebase) {
+        console.error("🚨 Firebase sigue sin estar disponible. Intentando nuevamente en 2 segundos...");
+        setTimeout(() => {
+            if (!window.firebase) {
+                console.error("🚨 Firebase definitivamente no está disponible.");
+                return;
+            }
+            iniciarFirebase();
+        }, 2000);
         return;
     }
+    iniciarFirebase();
+};
 
-    console.log("✅ Firebase ahora está disponible:", firebase);
+function iniciarFirebase() {
+    console.log("✅ Firebase cargado correctamente:", firebase);
 
     const app = firebase.initializeApp({
         apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
@@ -63,4 +70,4 @@ window.onload = function() {
     document.getElementById("logoutButton").addEventListener("click", () => {
         auth.signOut().then(() => window.location.href = "index.html");
     });
-};
+}
