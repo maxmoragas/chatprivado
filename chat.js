@@ -1,4 +1,5 @@
 console.log("🔍 chat.js se está ejecutando...");
+console.log("🔍 Verificando Firebase en chat.js:", typeof firebase);
 
 window.addEventListener("firebase-ready", () => {
     console.log("🔍 Probando acceso a Firebase desde chat.js:", firebase);
