@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "firebase/auth";
 
-// Configuración de Firebase con tus datos
+// Configuración de Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
   authDomain: "michatprivado-f704a.firebaseapp.com",
@@ -16,12 +16,13 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
-// Manejo de autenticación
+// Manejo de autenticación y redirección
 document.getElementById("loginButton").addEventListener("click", () => {
   signInWithPopup(auth, provider)
     .then((result) => {
       console.log("Usuario autenticado:", result.user);
       actualizarNickname(result.user);
+      window.location.href = "chat.html"; // Redirigir después de iniciar sesión
     })
     .catch((error) => {
       console.error("Error al iniciar sesión:", error);
@@ -33,6 +34,7 @@ document.getElementById("logoutButton").addEventListener("click", () => {
     .then(() => {
       console.log("Usuario cerró sesión.");
       document.getElementById("nickname").textContent = "Invitado";
+      window.location.href = "index.html"; // Redirigir al cerrar sesión
     })
     .catch((error) => {
       console.error("Error al cerrar sesión:", error);
