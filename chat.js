@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => {
-        console.log("🛠 Verificando si Firebase está definido después de 1 segundo:", typeof firebase);
-        console.log("🔍 Probando acceso a Firebase después de 1 segundo:", window.firebase);
+        console.log("🛠 Verificando si Firebase está definido después de 3 segundos:", typeof firebase);
+        console.log("🔍 Probando acceso a Firebase después de 3 segundos:", window.firebase);
 
         if (typeof firebase === "undefined") {
             console.error("🚨 Firebase sigue sin estar disponible.");
@@ -65,5 +65,5 @@ document.addEventListener("DOMContentLoaded", () => {
             auth.signOut().then(() => window.location.href = "index.html");
         });
 
-    }, 1000); // 🔥 Esperar 1 segundo antes de verificar Firebase
+    }, 3000); // 🔥 Esperamos 3 segundos antes de verificar Firebase
 });
