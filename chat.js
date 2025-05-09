@@ -14,15 +14,25 @@ document.addEventListener("DOMContentLoaded", () => {
     const showOnlineUsersButton = document.getElementById("showOnlineUsers");
     const onlineUsersContainer = document.getElementById("onlineUsers");
 
+    // 💡 Obtener el nickname desde Firebase y guardarlo en `localStorage`
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            firebase.database().ref("users/" + user.uid).once("value").then((snapshot) => {
+                const nickname = snapshot.val().nickname || "Invitado";
+                localStorage.setItem("nickname", nickname);
+                console.log("✅ Nickname registrado:", nickname);
+            });
+        }
+    });
+
     sendMessageButton.addEventListener("click", () => {
         const message = messageInput.value.trim();
         if (!message) return;
 
-        const user = firebase.auth().currentUser;
-        if (!user) return;
+        const nickname = localStorage.getItem("nickname") || "Invitado";
 
         firebase.database().ref("messages").push({
-            sender: localStorage.getItem("nickname"),
+            sender: nickname,
             text: message,
             timestamp: Date.now()
         });
