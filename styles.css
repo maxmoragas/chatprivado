@@ -78,11 +78,10 @@ h1 {
     border-radius: 0 0 10px 10px;
 }
 
-#fileInput {
+#imageButton {
     cursor: pointer;
-    background: none;
-    border: none;
-    color: white;
+    font-size: 22px;
+    margin-right: 10px;
 }
 
 #messageInput {
@@ -99,4 +98,5 @@ h1 {
     padding: 8px;
     border-radius: 5px;
     border: none;
+    font-size: 22px;
 }
