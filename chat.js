@@ -1,7 +1,8 @@
-// Conectar Firebase
+// Importar Firebase correctamente
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js";
 import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database-compat.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js";
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-storage-compat.js";
 
 // Configuración de Firebase
 const firebaseConfig = {
@@ -18,11 +19,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const auth = getAuth(app);
+const storage = getStorage(app);
 
 // Verificar usuario autenticado
 onAuthStateChanged(auth, (user) => {
     if (user) {
-        document.getElementById("nickname").innerText = user.email;
+        document.getElementById("nickname").innerText = "LLA Bragado";
     } else {
         window.location.href = "index.html"; // Redirigir si no está autenticado
     }
@@ -31,12 +33,12 @@ onAuthStateChanged(auth, (user) => {
 // Referencia al chat en Firebase
 const chatRef = ref(db, "chat");
 
-// Enviar mensaje
+// Enviar mensaje de texto
 document.getElementById("sendMessage").addEventListener("click", () => {
     const message = document.getElementById("messageInput").value;
     if (message.trim() !== "") {
         push(chatRef, {
-            user: auth.currentUser.email,
+            user: "LLA Bragado",
             message: message,
             timestamp: Date.now()
         });
@@ -44,11 +46,36 @@ document.getElementById("sendMessage").addEventListener("click", () => {
     }
 });
 
+// Enviar imagen
+document.getElementById("fileInput").addEventListener("change", (event) => {
+    const file = event.target.files[0];
+    if (file) {
+        const fileRef = storageRef(storage, "uploads/" + file.name);
+        uploadBytes(fileRef, file).then(() => {
+            getDownloadURL(fileRef).then((url) => {
+                push(chatRef, {
+                    user: "LLA Bragado",
+                    image: url,
+                    timestamp: Date.now()
+                });
+            });
+        });
+    }
+});
+
 // Mostrar mensajes en el chat
 onChildAdded(chatRef, (snapshot) => {
     const data = snapshot.val();
-    const messageElement = document.createElement("p");
-    messageElement.innerHTML = `<strong>${data.user}:</strong> ${data.message}`;
+    const messageElement = document.createElement("div");
+    messageElement.classList.add("message");
+
+    if (data.message) {
+        messageElement.innerHTML = `<strong>${data.user}:</strong> ${data.message}`;
+    } else if (data.image) {
+        messageElement.innerHTML = `<strong>${data.user}:</strong> <img src="${data.image}" alt="Imagen enviada" style="max-width: 200px;">`;
+    }
+
+    messageElement.classList.add(data.user === "LLA Bragado" ? "sent" : "received");
     document.getElementById("chatBox").appendChild(messageElement);
 });
 
