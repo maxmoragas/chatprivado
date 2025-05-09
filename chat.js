@@ -1,10 +1,12 @@
 window.onload = function() {
     function verificarFirebase() {
-        if (!window.firebase) {
+        if (typeof firebase === "undefined") {
             console.error("🚨 Firebase sigue sin estar disponible. Reintentando en 2 segundos...");
             setTimeout(verificarFirebase, 2000);
             return;
         }
+
+        console.log("✅ Firebase cargado correctamente en chat.js:", firebase);
         iniciarFirebase();
     }
 
@@ -12,7 +14,7 @@ window.onload = function() {
 };
 
 function iniciarFirebase() {
-    console.log("✅ Firebase ahora está disponible:", firebase);
+    console.log("✅ Inicializando Firebase en chat.js...");
 
     const app = firebase.initializeApp({
         apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
