@@ -101,16 +101,17 @@
 
             firebase.initializeApp(firebaseConfig);
             
-            // 🔍 Confirmar si Firebase está cargando correctamente en index.html
             console.log("🚀 Confirmando carga de Firebase en index.html:", window.firebase);
             console.log("✅ Firebase Auth:", typeof firebase.auth);
             
             // 📌 Compartir Firebase con chat.js
             window.firebaseInstance = firebase;
+
+            // ✅ Cargar chat.js solo cuando Firebase esté listo
+            const scriptChat = document.createElement("script");
+            scriptChat.src = "chat.js";
+            document.body.appendChild(scriptChat);
         });
     </script>
-
-    <!-- Cargar chat.js después de compartir Firebase -->
-    <script defer src="chat.js"></script>
 </body>
 </html>
