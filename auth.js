@@ -1,4 +1,4 @@
-// Verifica que Firebase está definido
+// Verificar que Firebase está cargado
 console.log("Firebase:", firebase);
 
 // Inicializar Firebase
