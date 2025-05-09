@@ -1,7 +1,9 @@
 {
+  "name": "LLA Bragado",
+  "version": "1.0.0",
+  "description": "Chat privado en tiempo real con Firebase",
   "type": "module",
   "dependencies": {
-    "express": "^5.1.0",
-    "firebase": "^11.6.1"
+    "firebase": "^10.7.0"
   }
 }
