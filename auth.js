@@ -1,12 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
-    if (typeof firebase === "undefined") {
+    if (!window.auth || !window.db) {
         console.error("🚨 Firebase NO se ha cargado correctamente.");
         return;
     }
 
     firebase.auth().onAuthStateChanged((user) => {
         if (user) {
-            window.location.href = "chat.html"; // 🔥 Redirigir al chat si el usuario está autenticado
+            window.location.href = "chat.html";
         }
     });
 });
@@ -24,16 +24,11 @@ window.registerUser = function() {
     firebase.auth().createUserWithEmailAndPassword(email, password)
         .then((userCredential) => {
             const user = userCredential.user;
-            firebase.database().ref("users/" + user.uid).set({
-                nickname: nickname,
-                email: email
-            });
+            firebase.database().ref("users/" + user.uid).set({ nickname, email });
             localStorage.setItem("nickname", nickname);
             alert("¡Registro exitoso! Bienvenido, " + nickname);
         })
-        .catch((error) => {
-            alert("Error: " + error.message);
-        });
+        .catch((error) => alert("Error: " + error.message));
 };
 
 window.loginUser = function() {
@@ -52,7 +47,5 @@ window.loginUser = function() {
             });
             alert("¡Inicio de sesión exitoso!");
         })
-        .catch((error) => {
-            alert("Error: " + error.message);
-        });
+        .catch((error) => alert("Error: " + error.message));
 };
