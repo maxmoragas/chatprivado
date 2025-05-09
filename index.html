@@ -25,12 +25,13 @@
             align-items: center;
         }
 
-        /* 🔥 Estilos del contenedor sin fondo blanco */
+        /* 🔥 Fondo violeta para el formulario */
         #loginContainer { 
             max-width: 400px; 
             width: 90%;
             padding: 20px; 
             border-radius: 5px; 
+            background-color: rgb(138,43,226); /* 🔥 Fondo violeta */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -39,7 +40,12 @@
 
         /* 🔥 Labels en columna */
         label { display: block; text-align: left; width: 100%; font-weight: bold; color: white; }
-        input, button { width: 100%; padding: 8px; font-size: 16px; margin-top: 5px; }
+        
+        /* 🔥 Inputs con texto blanco y fondo violeta */
+        input { width: 100%; padding: 8px; font-size: 16px; margin-top: 5px; background-color: transparent; color: white; border: 1px solid white; }
+
+        /* 🔥 Botones con fondo blanco */
+        button { width: 100%; padding: 8px; font-size: 16px; margin-top: 5px; background-color: white; color: rgb(138,43,226); font-weight: bold; }
 
         /* 🔥 Imagen del león */
         img { max-width: 200px; }
