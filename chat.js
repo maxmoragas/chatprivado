@@ -1,5 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const db = firebase.database();
+    // 🔥 Esperar a que Firebase esté listo
+    const checkFirebase = setInterval(() => {
+        if (window.db) {
+            clearInterval(checkFirebase); // Detener la espera cuando Firebase ya está cargado
+            iniciarChat();
+        }
+    }, 500);
+});
+
+function iniciarChat() {
+    const db = window.db;
 
     // 🔥 Guardar nickname
     document.getElementById("setNickname").addEventListener("click", () => {
@@ -53,4 +63,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
         document.getElementById("chatContainer").appendChild(messageContainer);
     });
-});
+}
