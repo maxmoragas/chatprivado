@@ -9,6 +9,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js"></script>
     <script src="firebaseConfig.js"></script>
+    <script src="auth.js"></script> <!-- 🔥 Se carga después de `firebaseConfig.js` -->
 
     <style>
         body { 
@@ -65,7 +66,5 @@
         <button onclick="registerUser()">Registrarse</button>
         <button onclick="loginUser()">Iniciar Sesión</button>
     </div>
-
-    <script src="auth.js"></script>
 </body>
 </html>
