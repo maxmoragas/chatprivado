@@ -1,4 +1,6 @@
 window.onload = function() {
+    console.log("🔍 Probando acceso a Firebase desde chat.js:", window.firebase);
+
     function verificarFirebase() {
         if (typeof firebase === "undefined") {
             console.error("🚨 Firebase sigue sin estar disponible en chat.js. Reintentando en 2 segundos...");
