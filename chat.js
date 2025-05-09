@@ -1,13 +1,10 @@
-console.log("🔍 chat.js se está ejecutando...");
-console.log("🔍 Verificando acceso a Firebase desde chat.js:", window.firebase);
-
-setTimeout(() => {
-    console.log("🔍 Segunda verificación después de 3 segundos:", window.firebase);
-    if (!window.firebase) {
-        console.error("🚨 Firebase sigue sin estar accesible en chat.js. Algo lo está bloqueando.");
-        console.warn("🔍 Posibles causas: script de Firebase no está completamente cargado en index.html, `window.firebase` no se comparte correctamente.");
+function iniciarFirebase() {
+    console.log("✅ Ejecutando iniciarFirebase...");
+    
+    // Aquí puedes agregar la lógica de autenticación o conexión a la base de datos
+    if (window.firebase) {
+        console.log("🔥 Firebase listo para usarse:", window.firebase);
     } else {
-        console.log("✅ Firebase finalmente está disponible en chat.js:", window.firebase);
-        iniciarFirebase();
+        console.error("🚨 Firebase aún no está disponible.");
     }
-}, 3000);
+}
