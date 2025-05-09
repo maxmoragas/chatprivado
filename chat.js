@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         messageInput.value = "";
+        adjustHeight(messageInput);
     });
 
     firebase.database().ref("messages").on("child_added", (snapshot) => {
@@ -73,4 +74,9 @@ document.addEventListener("DOMContentLoaded", () => {
             firebase.database().ref("users/" + user.uid).update({ online: true });
         }
     });
+
+    window.adjustHeight = function(element) {
+        element.style.height = "auto";
+        element.style.height = element.scrollHeight + "px";
+    };
 });
