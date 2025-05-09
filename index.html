@@ -62,11 +62,11 @@
         }
     </style>
     
-    <!-- Carga Firebase en el <head> -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-storage-compat.js"></script>
+    <!-- Carga Firebase con "defer" para garantizar que se cargue antes de chat.js -->
+    <script defer src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database-compat.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/10.7.0/firebase-storage-compat.js"></script>
     <script defer src="auth.js"></script>
 </head>
 <body>
@@ -101,7 +101,7 @@
 
             firebase.initializeApp(firebaseConfig);
             
-            // 🔍 Confirmar si Firebase está cargando en index.html
+            // 🔍 Confirmar si Firebase está cargando correctamente en index.html
             console.log("🚀 Confirmando carga de Firebase en index.html:", window.firebase);
         });
     </script>
