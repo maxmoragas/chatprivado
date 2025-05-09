@@ -1,4 +1,3 @@
-// 🔥 Inicializar Firebase sin `import {}` para evitar errores
 document.addEventListener("DOMContentLoaded", () => {
     if (typeof firebase === "undefined") {
         console.error("🚨 Firebase NO se ha cargado correctamente.");
