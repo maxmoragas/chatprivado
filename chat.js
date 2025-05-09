@@ -1,7 +1,7 @@
 window.onload = function() {
-    console.log("🔍 Probando acceso a Firebase desde chat.js:", window.firebase);
+    console.log("🔍 Probando acceso a Firebase desde chat.js:", firebase);
 
-    if (!window.firebase) {
+    if (typeof firebase === "undefined") {
         console.error("🚨 Firebase sigue sin estar disponible en chat.js. Deteniendo ejecución.");
         return;
     }
