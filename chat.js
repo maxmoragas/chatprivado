@@ -1,10 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
+    console.log("🛠 Verificando si Firebase está definido:", typeof firebase); // 🔍 Comprobando si Firebase está cargado antes de usarlo
+
     if (typeof firebase === "undefined") {
         console.error("🚨 Firebase no está disponible.");
         return;
     }
 
-    console.log("✅ Verificando Firebase...", firebase); // 🔍 Comprobando si Firebase está cargando bien
+    console.log("✅ Firebase cargado correctamente:", firebase);
 
     const app = firebase.initializeApp({
         apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
