@@ -1,14 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // 🔥 Esperar a que Firebase esté listo
-    const checkFirebase = setInterval(() => {
-        if (window.db) {
-            clearInterval(checkFirebase); // Detener la espera cuando Firebase ya está cargado
-            iniciarChat();
-        }
-    }, 500);
-});
-
-function iniciarChat() {
+    if (!window.db) {
+        console.error("Firebase no ha sido inicializado correctamente.");
+        return;
+    }
+    
     const db = window.db;
 
     // 🔥 Guardar nickname
@@ -63,4 +58,4 @@ function iniciarChat() {
 
         document.getElementById("chatContainer").appendChild(messageContainer);
     });
-}
+});
