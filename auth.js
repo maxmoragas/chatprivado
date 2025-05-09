@@ -1,3 +1,6 @@
+// Verifica que Firebase está definido
+console.log("Firebase:", firebase);
+
 // Inicializar Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
