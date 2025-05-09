@@ -33,34 +33,33 @@ document.addEventListener("DOMContentLoaded", () => {
     // Referencia al chat en Firebase
     const chatRef = db.ref("chat");
 
-    // Enviar mensaje de texto
-    document.getElementById("sendMessage").addEventListener("click", () => {
+    // Enviar mensaje de texto o imagen
+    document.getElementById("sendMessage").addEventListener("click", async () => {
         const message = document.getElementById("messageInput").value;
-        if (message.trim() !== "") {
+        const file = document.getElementById("fileInput").files[0];
+
+        if (file) {
+            // Subir imagen a Firebase Storage
+            const fileRef = storage.ref("uploads/" + file.name);
+            await fileRef.put(file);
+            const url = await fileRef.getDownloadURL();
+
+            chatRef.push({
+                user: "LLA Bragado",
+                image: url,
+                timestamp: Date.now()
+            });
+        } else if (message.trim() !== "") {
             chatRef.push({
                 user: "LLA Bragado",
                 message: message,
                 timestamp: Date.now()
             });
-            document.getElementById("messageInput").value = "";
         }
-    });
 
-    // Enviar imagen
-    document.getElementById("fileInput").addEventListener("change", (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            const fileRef = storage.ref("uploads/" + file.name);
-            fileRef.put(file).then(() => {
-                fileRef.getDownloadURL().then((url) => {
-                    chatRef.push({
-                        user: "LLA Bragado",
-                        image: url,
-                        timestamp: Date.now()
-                    });
-                });
-            });
-        }
+        // Limpiar input de texto y archivo
+        document.getElementById("messageInput").value = "";
+        document.getElementById("fileInput").value = "";
     });
 
     // Mostrar mensajes en el chat
