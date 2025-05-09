@@ -6,15 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
     
     const db = window.db;
 
-    // 🔥 Guardar nickname
-    document.getElementById("setNickname").addEventListener("click", () => {
-        const nickname = document.getElementById("nicknameInput").value;
-        if (nickname.trim() !== "") {
-            localStorage.setItem("nickname", nickname);
-        }
-    });
-
-    // 🔥 Enviar mensaje de texto
     document.getElementById("sendMessage").addEventListener("click", () => {
         const messageText = document.getElementById("messageInput").value;
         if (messageText.trim() !== "") {
@@ -26,7 +17,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // 🔥 Enviar imagen en Base64
     document.getElementById("imageInput").addEventListener("change", (event) => {
         const file = event.target.files[0];
         if (file) {
@@ -41,7 +31,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // 🔥 Cargar mensajes en el chat
     db.ref("messages").on("child_added", (snapshot) => {
         const message = snapshot.val();
         const messageContainer = document.createElement("div");
