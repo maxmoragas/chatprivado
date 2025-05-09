@@ -62,7 +62,7 @@
         }
     </style>
     
-    <!-- Carga Firebase con compatibilidad como estaba antes -->
+    <!-- Carga Firebase -->
     <script defer src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
     <script defer src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
     <script defer src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database-compat.js"></script>
@@ -104,7 +104,13 @@
             // 🔍 Confirmar si Firebase está cargando correctamente en index.html
             console.log("🚀 Confirmando carga de Firebase en index.html:", window.firebase);
             console.log("✅ Firebase Auth:", typeof firebase.auth);
+            
+            // 📌 Compartir Firebase con chat.js
+            window.firebaseInstance = firebase;
         });
     </script>
+
+    <!-- Cargar chat.js después de compartir Firebase -->
+    <script defer src="chat.js"></script>
 </body>
 </html>
