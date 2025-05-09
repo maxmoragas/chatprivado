@@ -1,6 +1,10 @@
-// Esperar a que Firebase esté cargado
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("Firebase:", firebase);
+    if (typeof firebase === "undefined") {
+        console.error("🚨 Firebase no está disponible. Verifica que está correctamente cargado en index.html.");
+        return;
+    }
+
+    console.log("✅ Firebase cargado correctamente:", firebase);
 
     // Inicializar Firebase
     const firebaseConfig = {
