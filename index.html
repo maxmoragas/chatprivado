@@ -104,11 +104,13 @@
             console.log("🚀 Confirmando carga de Firebase en index.html:", firebase);
             console.log("✅ Firebase Auth:", typeof firebase.auth);
             
-            // 📌 Compartir Firebase globalmente
-            window.firebase = firebase;
-            console.log("✅ Firebase asignado correctamente a window.firebase");
+            // 📌 Esperar a que Firebase esté completamente listo antes de asignarlo
+            setTimeout(() => {
+                window.firebase = firebase;
+                console.log("✅ Firebase asignado correctamente a window.firebase");
 
-            window.dispatchEvent(new Event("firebase-ready"));
+                window.dispatchEvent(new Event("firebase-load-complete"));
+            }, 1000);
         });
     </script>
 
