@@ -1,8 +1,7 @@
-// 🔥 Asegurarse de que Firebase está disponible antes de ejecutar código
 document.addEventListener("DOMContentLoaded", () => {
     const db = firebase.database();
 
-    // 🔥 Guardar el nickname en LocalStorage
+    // 🔥 Guardar nickname
     document.getElementById("setNickname").addEventListener("click", () => {
         const nickname = document.getElementById("nicknameInput").value;
         if (nickname.trim() !== "") {
@@ -10,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // 🔥 Enviar mensajes de texto a Firebase
+    // 🔥 Enviar mensaje de texto
     document.getElementById("sendMessage").addEventListener("click", () => {
         const messageText = document.getElementById("messageInput").value;
         if (messageText.trim() !== "") {
@@ -18,11 +17,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 text: messageText,
                 sender: localStorage.getItem("nickname") || "Anon"
             });
-            document.getElementById("messageInput").value = ""; // Limpia el campo
+            document.getElementById("messageInput").value = "";
         }
     });
 
-    // 🔥 Enviar imágenes a Firebase en Base64
+    // 🔥 Enviar imagen en Base64
     document.getElementById("imageInput").addEventListener("change", (event) => {
         const file = event.target.files[0];
         if (file) {
