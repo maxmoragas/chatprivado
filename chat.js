@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (messageText.trim() !== "") {
             db.ref("messages").push({
                 text: messageText,
-                sender: localStorage.getItem("nickname") || "Anon"
+                sender: firebase.auth().currentUser.email
             });
             document.getElementById("messageInput").value = "";
         }
@@ -25,3 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("chatContainer").appendChild(messageContainer);
     });
 });
+
+// 🔥 Función para cerrar sesión
+window.logout = function() {
+    firebase.auth().signOut().then(() => {
+        window.location.href = "index.html";
+    });
+};
