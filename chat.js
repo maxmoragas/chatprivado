@@ -1,24 +1,24 @@
 console.log("🔍 chat.js se está ejecutando...");
-console.log("🔍 Verificando Firebase en chat.js:", typeof firebase);
+console.log("🔍 Verificando Firebase en chat.js:", typeof window.firebase);
 
 window.addEventListener("firebase-ready", () => {
-    console.log("🔍 Probando acceso a Firebase desde chat.js:", firebase);
+    console.log("🔍 Probando acceso a Firebase desde chat.js:", window.firebase);
 
-    if (typeof firebase === "undefined") {
+    if (typeof window.firebase === "undefined") {
         console.error("🚨 Firebase sigue sin estar disponible en chat.js. Deteniendo ejecución.");
         return;
     }
 
-    console.log("✅ Firebase ya está disponible en chat.js:", firebase);
+    console.log("✅ Firebase ya está disponible en chat.js:", window.firebase);
     iniciarFirebase();
 });
 
 function iniciarFirebase() {
     console.log("✅ Usando la instancia de Firebase creada en index.html.");
 
-    const db = firebase.database();
-    const auth = firebase.auth();
-    const storage = firebase.storage();
+    const db = window.firebase.database();
+    const auth = window.firebase.auth();
+    const storage = window.firebase.storage();
 
     auth.onAuthStateChanged((user) => {
         if (!user) window.location.href = "index.html";
