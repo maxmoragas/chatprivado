@@ -1,8 +1,8 @@
 console.log("🔍 chat.js se está ejecutando...");
 console.log("🔍 Verificando Firebase en chat.js:", typeof window.firebase);
 
-window.addEventListener("firebase-ready", () => {
-    console.log("🔍 Probando acceso a Firebase desde chat.js:", window.firebase);
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("🔍 Verificando Firebase después de la carga:", typeof window.firebase);
 
     if (typeof window.firebase === "undefined") {
         console.error("🚨 Firebase sigue sin estar disponible en chat.js. Deteniendo ejecución.");
