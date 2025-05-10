@@ -11,12 +11,6 @@ function iniciarFirebase() {
     if (window.firebase && window.firebase.database) {
         console.log("🔥 Firebase listo para usarse en chat.js:", window.firebase);
 
-        const auth = window.firebase.auth();
-        const database = window.firebase.database();
-
-        console.log("✅ Autenticación Firebase:", auth);
-        console.log("✅ Base de datos Firebase:", database);
-
         escucharMensajes();
     } else {
         console.error("🚨 Firebase aún no está disponible en chat.js.");
@@ -28,16 +22,16 @@ function enviarMensaje() {
     const mensajeInput = document.getElementById("mensajeInput");
     const mensaje = mensajeInput.value.trim();
 
-    if (mensaje === "") return; // Evitar mensajes vacíos
+    if (mensaje === "") return; 
 
     window.firebase.database().ref("chat").push({
-        usuario: window.firebase.auth().currentUser.email,
+        usuario: "Anonimo",
         mensaje: mensaje,
         timestamp: Date.now()
     });
 
     console.log("✅ Mensaje enviado a Firebase:", mensaje);
-    mensajeInput.value = ""; // Limpiar el campo después de enviar
+    mensajeInput.value = ""; 
 }
 
 // Función para recibir mensajes en tiempo real
@@ -46,18 +40,14 @@ function escucharMensajes() {
         const datos = snapshot.val();
         console.log("📩 Nuevo mensaje recibido:", datos);
 
-        // Agregar mensaje al chat
         const chatContainer = document.getElementById("chatContainer");
+        if (!chatContainer) {
+            console.error("🚨 No se encontró el `chatContainer`.");
+            return;
+        }
+
         const mensajeElemento = document.createElement("p");
         mensajeElemento.textContent = `${datos.usuario}: ${datos.mensaje}`;
         chatContainer.appendChild(mensajeElemento);
     });
 }
-
-// Verificación adicional para evitar errores de carga
-document.addEventListener("DOMContentLoaded", () => {
-    if (!window.firebase) {
-        console.error("🚨 Firebase aún no está disponible en chat.js. Intentando nuevamente en 3 segundos...");
-        setTimeout(iniciarFirebase, 3000);
-    }
-});
