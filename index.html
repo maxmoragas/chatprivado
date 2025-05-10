@@ -99,10 +99,10 @@
                 appId: "1:187774286181:web:95fc9391a64d3d244e498c"
             };
 
-            const app = firebase.initializeApp(firebaseConfig);
-            console.log("🚀 Firebase cargado en index.html:", app);
+            firebase.initializeApp(firebaseConfig);
+            console.log("🚀 Firebase cargado en index.html:", firebase);
 
-            window.firebase = app;
+            window.firebase = firebase; // 🔹 Corrección: ahora incluye todas las funciones de Firebase.
             console.log("✅ Firebase asignado correctamente a window.firebase");
 
             // Disparar evento para que `chat.js` detecte que Firebase está listo
