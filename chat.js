@@ -1,7 +1,7 @@
 console.log("🔍 chat.js se está ejecutando...");
 
 function esperarFirebase() {
-    if (window.firebase) {
+    if (window.firebase && window.firebase.database) {
         console.log("✅ Firebase detectado en chat.js:", window.firebase);
         iniciarFirebase();
     } else {
