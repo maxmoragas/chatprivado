@@ -26,22 +26,18 @@
             margin-top: 20px;
         }
 
-        .form-container {
-            margin-top: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        #chatContainer {
+            width: 80%;
+            margin: 20px auto;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            min-height: 300px;
         }
 
-        label {
-            font-size: 18px;
-            margin-top: 10px;
-        }
-
-        input {
+        input, button {
             padding: 10px;
             margin-top: 5px;
-            width: 200px;
             border-radius: 5px;
             border: none;
         }
@@ -49,12 +45,7 @@
         button {
             background-color: rgb(0, 100, 200);
             color: white;
-            padding: 8px;
-            border-radius: 5px;
-            border: none;
             cursor: pointer;
-            margin-top: 10px;
-            font-size: 16px;
         }
 
         button:hover {
@@ -66,27 +57,17 @@
     <script defer src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
     <script defer src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
     <script defer src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database-compat.js"></script>
-    <script defer src="https://www.gstatic.com/firebasejs/10.7.0/firebase-storage-compat.js"></script>
-    <script defer src="auth.js"></script>
+
 </head>
 <body>
     <h1>LLA BRAGADO</h1>
 
     <img src="leon.png" alt="León">
 
-    <div class="form-container">
-        <label for="nickname">Nickname:</label>
-        <input type="text" id="nickname" name="nickname">
+    <div id="chatContainer"></div>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email">
-
-        <label for="password">Contraseña:</label>
-        <input type="password" id="password" name="password">
-
-        <button id="registerButton">Registro</button>
-        <button id="loginButton">Login</button>
-    </div>
+    <input type="text" id="mensajeInput" placeholder="Escribe un mensaje...">
+    <button onclick="enviarMensaje()">Enviar</button>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -102,15 +83,13 @@
             firebase.initializeApp(firebaseConfig);
             console.log("🚀 Firebase cargado en index.html:", firebase);
 
-            window.firebase = firebase; // 🔹 Corrección: ahora incluye todas las funciones de Firebase.
+            window.firebase = firebase;  
             console.log("✅ Firebase asignado correctamente a window.firebase");
 
-            // Disparar evento para que `chat.js` detecte que Firebase está listo
             window.dispatchEvent(new Event("firebase-load-complete"));
         });
     </script>
 
-    <!-- Cargar chat.js después de que Firebase esté listo -->
     <script defer src="chat.js"></script>
 </body>
 </html>
