@@ -3,25 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat - LLA Bragado</title>
-    <link rel="stylesheet" href="styles.css">
-    <script defer src="chat.js"></script>
+    <title>LLA BRAGADO - Chat</title>
+    
+    <link rel="icon" href="https://www.google.com/favicon.ico">
+    
+    <style>
+        body {
+            background-color: rgb(102, 51, 153);
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        h1 {
+            color: white;
+            font-size: 36px;
+            margin-top: 20px;
+        }
+
+        #chatContainer {
+            width: 80%;
+            margin: 20px auto;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            min-height: 300px;
+        }
+
+        input, button {
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        button {
+            background-color: rgb(0, 100, 200);
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: rgb(0, 80, 180);
+        }
+    </style>
+    
+    <!-- Carga Firebase -->
+    <script defer src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database-compat.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/10.7.0/firebase-storage-compat.js"></script>
+
 </head>
 <body>
-    <div id="chatContainer">
-        <header>
-            <h1>LLA Bragado - Chat Privado</h1>
-            <button id="logoutButton">Cerrar sesión</button>
-        </header>
+    <h1>LLA BRAGADO - Chat</h1>
 
-        <div id="chatBox"></div>
+    <div id="chatContainer"></div>
 
-        <div id="messageControls">
-            <label for="fileInput" id="imageButton">📷</label>
-            <input type="file" id="fileInput" style="display: none;">
-            <input type="text" id="messageInput" placeholder="Escribe un mensaje...">
-            <button id="sendMessage">➤</button>
-        </div>
-    </div>
+    <input type="text" id="mensajeInput" placeholder="Escribe un mensaje...">
+    <button onclick="enviarMensaje()">Enviar</button>
+
+    <input type="file" id="imagenInput">
+    <button onclick="enviarImagen()">Enviar Imagen</button>
+
+    <script defer src="chat.js"></script>
 </body>
 </html>
