@@ -24,13 +24,18 @@ function enviarMensaje() {
 
     if (mensaje === "") return; 
 
-    window.firebase.database().ref("chat").push({
+    const mensajeRef = window.firebase.database().ref("chat").push();
+    
+    mensajeRef.set({
         usuario: "Anonimo",
         mensaje: mensaje,
         timestamp: Date.now()
+    }).then(() => {
+        console.log("✅ Mensaje enviado correctamente:", mensaje);
+    }).catch((error) => {
+        console.error("🚨 Error al enviar mensaje a Firebase:", error);
     });
 
-    console.log("✅ Mensaje enviado a Firebase:", mensaje);
     mensajeInput.value = ""; 
 }
 
