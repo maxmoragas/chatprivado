@@ -1,8 +1,6 @@
-console.log("🔍 chat.js se está ejecutando...");
-
 firebase.auth().onAuthStateChanged(user => {
     if (!user) {
-        window.location.href = "index.html";  // 🔹 Redirigir si no está autenticado
+        window.location.href = "index.html";
     } else {
         escucharMensajes();
     }
@@ -24,13 +22,10 @@ function enviarMensaje() {
     mensajeInput.value = "";
 }
 
-// Escuchar mensajes en tiempo real
 function escucharMensajes() {
     firebase.database().ref("chat").on("child_added", snapshot => {
         const datos = snapshot.val();
         const chatContainer = document.getElementById("chatContainer");
-
-        if (!chatContainer) return;
 
         const mensajeElemento = document.createElement("p");
         mensajeElemento.textContent = `${datos.usuario}: ${datos.mensaje}`;
