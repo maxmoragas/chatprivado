@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LLA BRAGADO</title>
+    <title>LLA BRAGADO - Chat</title>
     
     <link rel="icon" href="https://www.google.com/favicon.ico">
     
@@ -26,13 +26,12 @@
             margin-top: 20px;
         }
 
-        #chatContainer {
+        .form-container, #chatContainer {
             width: 80%;
             margin: 20px auto;
             background-color: rgba(255, 255, 255, 0.1);
             padding: 10px;
             border-radius: 5px;
-            min-height: 300px;
         }
 
         input, button {
@@ -57,23 +56,43 @@
     <script defer src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
     <script defer src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
     <script defer src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database-compat.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/10.7.0/firebase-storage-compat.js"></script>
 
 </head>
 <body>
-    <h1>LLA BRAGADO</h1>
+    <h1>LLA BRAGADO - Chat</h1>
 
     <img src="leon.png" alt="León">
 
+    <!-- Registro y Login -->
+    <div class="form-container">
+        <label for="email">Email:</label>
+        <input type="email" id="email">
+
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password">
+
+        <button onclick="registrarUsuario()">Registro</button>
+        <button onclick="loginUsuario()">Login</button>
+        <button onclick="logoutUsuario()">Logout</button>
+    </div>
+
+    <!-- Área de chat -->
     <div id="chatContainer"></div>
 
     <input type="text" id="mensajeInput" placeholder="Escribe un mensaje...">
     <button onclick="enviarMensaje()">Enviar</button>
+
+    <!-- Carga de imágenes -->
+    <input type="file" id="imagenInput">
+    <button onclick="enviarImagen()">Enviar Imagen</button>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const firebaseConfig = {
                 apiKey: "AIzaSyCalxt34jrPFP9VJM5yBFA4BRF2U1_XiZw",
                 authDomain: "michatprivado-f704a.firebaseapp.com",
+                databaseURL: "https://michatprivado-f704a-default-rtdb.firebaseio.com/",
                 projectId: "michatprivado-f704a",
                 storageBucket: "michatprivado-f704a.appspot.com",
                 messagingSenderId: "187774286181",
@@ -81,10 +100,7 @@
             };
 
             firebase.initializeApp(firebaseConfig);
-            console.log("🚀 Firebase cargado en index.html:", firebase);
-
             window.firebase = firebase;  
-            console.log("✅ Firebase asignado correctamente a window.firebase");
 
             window.dispatchEvent(new Event("firebase-load-complete"));
         });
