@@ -105,6 +105,7 @@
             window.firebase = app;
             console.log("✅ Firebase asignado correctamente a window.firebase");
 
+            // Disparar evento para que `chat.js` detecte que Firebase está listo
             window.dispatchEvent(new Event("firebase-load-complete"));
         });
     </script>
