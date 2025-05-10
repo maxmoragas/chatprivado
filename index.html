@@ -99,12 +99,13 @@
                 appId: "1:187774286181:web:95fc9391a64d3d244e498c"
             };
 
-            firebase.initializeApp(firebaseConfig);
-            console.log("🚀 Firebase cargado en index.html:", firebase);
+            const app = firebase.initializeApp(firebaseConfig);
+            console.log("🚀 Firebase cargado en index.html:", app);
 
-            // 🔥 Asignación directa de Firebase a `window.firebase`
-            window.firebase = firebase;
-            console.log("✅ Firebase asignado directamente a window.firebase");
+            window.firebase = app;
+            console.log("✅ Firebase asignado correctamente a window.firebase");
+
+            window.dispatchEvent(new Event("firebase-load-complete"));
         });
     </script>
 
